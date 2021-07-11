@@ -1,0 +1,16 @@
+@use "@/styles/helpers" as *
+
+.posts
+    padding: 60px 0
+    width: 80%
+    margin: auto
+    display: grid
+    grid-template-columns: repeat(2, 1fr)
+    gap: 1.25rem 0.9375rem
+    height: fit-content
+
+    @media screen and ( max-width: 769px )
+        grid-template-columns: 1fr
+
+.swiper
+    height: 100%

@@ -1,0 +1,31 @@
+@use "@/styles/helpers" as *
+
+.post
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    height: 8.125em
+    padding: 1.25em
+    background: $dark
+    border-radius: 10px
+
+    @media screen and ( max-width: 1367px )
+        font-size: 0.8rem
+
+    &__location
+        display: flex
+        gap: 0.45em
+        align-items: center
+        font-size: 0.75em
+
+    &__bottom
+        display: flex
+        justify-content: space-between
+        align-items: center
+
+    &__loc
+        width: 0.9375em
+
+    &__respond
+        font-weight: 900
+        font-size: 0.9375em

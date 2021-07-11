@@ -1,0 +1,34 @@
+@use "@styles/helpers" as *
+
+.nav
+    width: 100%
+    padding: 1.2em
+    background: rgba(16, 18, 19, 0.85)
+    position: sticky
+    top: 0
+    z-index: 10
+    transition: padding-top 0.2s ease, height 0.2s ease
+    flex: none
+
+    @media screen and ( max-width: 1367px )
+        font-size: 0.75rem
+
+    &__links
+        width: 100%
+        display: flex
+        justify-content: center
+        gap: 2.1875em
+        flex-wrap: wrap
+
+    &__link
+        width: 100%
+        height: 100%
+        display: flex
+        justify-content: center
+        align-items: center
+
+        &[data-selected="true"]
+            opacity: 0.4
+        
+    &[data-top="true"]
+        padding-top: 1.8em

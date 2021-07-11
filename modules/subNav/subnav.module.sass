@@ -1,0 +1,43 @@
+@use "@styles/helpers" as *
+
+.subnav
+    width: 100%
+    height: 100%
+    // @extend %flex-center
+    padding: 2rem
+
+    @media screen and ( max-width: 769px )
+        padding: 2rem 0
+
+    &__items
+        position: relative
+        display: flex
+        flex-direction: column
+        gap: 10px
+        width: max(43em, 30%)
+        justify-content: center
+        margin: auto
+
+        @media screen and ( max-width: 769px )
+            width: min(21em, 90%)
+
+        &::before
+            content: ""
+            position: absolute
+            left: 20px
+            top: -20px
+            bottom: -20px
+            border-left: 1px solid $yellow
+
+    &__item
+        background: $dark
+        border-radius: 10px
+        padding: 24px 20px
+        display: flex
+        justify-content: center
+        align-items: center
+        box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.45)
+        font-size: 15px
+        line-height: 1.27
+        text-align: center
+        overflow-wrap: break-word

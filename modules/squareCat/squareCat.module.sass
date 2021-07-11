@@ -1,0 +1,51 @@
+@use "@styles/helpers" as *
+
+.square
+    position: relative
+    height: 24em
+    padding: 2.8125em
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    gap: 1.75em
+    text-align: center
+    background: rgba(28, 28, 28, 0.8)
+    border: 1px solid #1c1c1c
+
+    @media screen and ( max-width: 769px )
+        height: 30em
+    
+    @media screen and ( max-width: 321px )
+        height: 26em
+
+    &__img
+        position: absolute
+        z-index: -1
+        top: 0
+        left: 0
+        width: 100%
+        height: 100%
+
+    &__heading
+        font-weight: 900
+        font-size: 1.25em
+
+        @media screen and ( max-width: 769px )
+            font-weight: 700
+
+    &__subheading
+        font-weight: 700
+        font-size: 1.0625em
+
+    &__doc
+        position: absolute
+        bottom: 2em
+        right: 2em
+        padding: 5px
+        border-right: 1px solid $yellow
+        border-bottom: 1px solid $yellow
+
+        &Img
+            height: 3em
+            width: 3em
