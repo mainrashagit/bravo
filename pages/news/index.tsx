@@ -17,7 +17,6 @@ const News: React.FC<Props> = ({}) => {
       date: "06 jun 2021",
       comments: 36,
       views: "1024",
-      img: require("@img/new1.png"),
     },
     {
       title: "How to build a successful career in consulting?",
@@ -27,7 +26,6 @@ const News: React.FC<Props> = ({}) => {
       date: "06 jun 2021",
       comments: 36,
       views: "1024",
-      img: require("@img/new1.png"),
     },
     {
       title: "How to build a successful career in consulting?",
@@ -37,7 +35,6 @@ const News: React.FC<Props> = ({}) => {
       date: "06 jun 2021",
       comments: 36,
       views: "1024",
-      img: require("@img/new1.png"),
     },
     {
       title: "How to build a successful career in consulting?",
@@ -47,7 +44,6 @@ const News: React.FC<Props> = ({}) => {
       date: "06 jun 2021",
       comments: 36,
       views: "1024",
-      img: require("@img/new1.png"),
     },
     {
       title: "How to build a successful career in consulting?",
@@ -57,7 +53,6 @@ const News: React.FC<Props> = ({}) => {
       date: "06 jun 2021",
       comments: 36,
       views: "1024",
-      img: require("@img/new1.png"),
     },
     {
       title: "How to build a successful career in consulting?",
@@ -67,11 +62,10 @@ const News: React.FC<Props> = ({}) => {
       date: "06 jun 2021",
       comments: 36,
       views: "1024",
-      img: require("@img/new1.png"),
     },
   ]
   const newEls = news.map(
-    ({ title, subsection, brief, date, comments, views, img }, i) => (
+    ({ title, subsection, brief, date, comments, views }, i) => (
       <li className={styles.news__new} key={`new-${i}`}>
         <New
           title={title}
@@ -80,7 +74,6 @@ const News: React.FC<Props> = ({}) => {
           date={date}
           comments={comments}
           views={views}
-          img={img}
         />
       </li>
     )

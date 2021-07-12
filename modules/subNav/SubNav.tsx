@@ -1,6 +1,6 @@
 import { NavContext } from "@/context/NavContext"
 import Nav from "@modules/nav/Nav"
-import React, { useContext } from "react"
+import { useContext } from "react"
 import styles from "./subnav.module.sass"
 import SimpleBarReact from "simplebar-react"
 

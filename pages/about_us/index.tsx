@@ -1,5 +1,4 @@
 import Nav from "@modules/nav/Nav"
-import React from "react"
 import styles from "./aboutus.module.sass"
 import SimpleBarReact from "simplebar-react"
 import "simplebar/src/simplebar.css"
@@ -72,7 +71,11 @@ const AboutUs: React.FC<Props> = ({}) => {
         <div className={styles.content}>
           <div className={styles.about}>
             <div className={styles.about__left}>
-              <img src={"/logo.svg"} alt="logo" className={styles.about__logo} />
+              <img
+                src={"/logo.svg"}
+                alt="logo"
+                className={styles.about__logo}
+              />
             </div>
             <div className={styles.about__right}>
               <div className={styles.about__title}>Bravo Consulting</div>

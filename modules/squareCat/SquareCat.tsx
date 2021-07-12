@@ -1,4 +1,3 @@
-import React from "react"
 import styles from "./squareCat.module.sass"
 import Image from "next/image"
 

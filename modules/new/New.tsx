@@ -1,4 +1,3 @@
-import React from "react"
 import styles from "./new.module.sass"
 import Image from "next/image"
 import Img from "@img/new1.png"
@@ -10,7 +9,6 @@ interface Props {
   date: string
   comments: number | string
   views: number | string
-  img: string
 }
 
 const New: React.FC<Props> = ({
@@ -20,7 +18,6 @@ const New: React.FC<Props> = ({
   date,
   comments,
   views,
-  img,
 }) => {
   return (
     <div className={styles.new}>

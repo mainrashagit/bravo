@@ -17,7 +17,6 @@ const Member: React.FC<Props> = ({ name, post, img }) => {
     const getImg = async () => {
       const res = await import(`../../assets/img/${img}`)
       const result = await res.default
-      console.log(result)
       setImage(result)
     }
     getImg()
