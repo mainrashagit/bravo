@@ -139,27 +139,31 @@
             position: absolute
             left: 0
             right: 0
-            background: #000
-            height: fit-content
+            background: #000000d2
+            height: 100vh
+            justify-content: initial
+            gap: 0
             max-height: 0
             padding: 0
-            gap: 1.875rem
             overflow: hidden
             transition: max-height 0.2s, padding 0.2s
         &[data-active="true"]
-            padding: 3.4375rem 0
-            max-height: 80vh
+            max-height: 100vh
 
     &__links
         display: flex
         flex-direction: column
         text-align: center
         gap: 0.625em
+        padding: 3.4375rem 0 0.9375rem
+        background:#000000
 
     &__bottom
         display: flex
         flex-direction: column
         gap: 5em
+        background:#000000
+        padding: 0.9375rem 0 3.4375rem
 
     &__misc
         display: flex

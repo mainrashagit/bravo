@@ -1,5 +1,5 @@
 import styles from "./sidenav.module.sass"
-import { useState } from "react"
+import { useState, MouseEvent } from "react"
 import Link from "next/link"
 import Presentation from "@modules/presentation/Presentation"
 import Image from "next/image"
@@ -16,6 +16,10 @@ const SideNav: React.FC<Props> = ({ scrollDown }) => {
   }
   const toggleBurger = () => {
     setBurger(!burger)
+  }
+  function offBurger(e: MouseEvent) {
+    if (e.target !== e.currentTarget) return
+    setBurger(false)
   }
   return (
     <>
@@ -82,7 +86,7 @@ const SideNav: React.FC<Props> = ({ scrollDown }) => {
             </div>
           </div>
         </div>
-        <div className={styles.nav__main} data-active={burger}>
+        <div className={styles.nav__main} data-active={burger} onClick={offBurger}>
           <ul className={styles.nav__links}>
             <li className={styles.nav__link}>
               <Link href="/about_us">
