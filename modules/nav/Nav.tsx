@@ -1,11 +1,5 @@
 import { NavContext } from "@/context/NavContext"
-import {
-  HTMLProps,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react"
+import { HTMLProps, useContext, useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import styles from "./nav.module.sass"
 
@@ -21,9 +15,13 @@ const Nav: React.FC<Props & HTMLProps<HTMLElement>> = ({
   const links = useContext(NavContext)
   const [atTop, setAtTop] = useState(false)
   const adjust = () => {
-    if (!navRef.current) return
-    if (navRef.current.getBoundingClientRect().top <= 0) return setAtTop(true)
-    setAtTop(false)
+    const fn = () => {
+      if (!navRef.current) return
+      if (navRef.current.getBoundingClientRect().top <= 30)
+        return setAtTop(true)
+      setAtTop(false)
+    }
+    setTimeout(fn, 100)
   }
   useEffect(() => {
     adjust()
@@ -35,16 +33,17 @@ const Nav: React.FC<Props & HTMLProps<HTMLElement>> = ({
   return (
     <nav ref={navRef} className={styles.nav} data-top={atTop} {...props}>
       <ul className={styles.nav__links}>
-        {links && links.map(({ item }, i) => (
-          <li className={styles.nav__li} key={`nav-link-${i}`}>
-            <Link
-              href={`/nav/${item.replace(/ /g, "_")}`}
-              data-selected={item.includes(String(selectedItem))}
-            >
-              <a className={styles.nav__link}>{item}</a>
-            </Link>
-          </li>
-        ))}
+        {links &&
+          links.map(({ item }, i) => (
+            <li className={styles.nav__li} key={`nav-link-${i}`}>
+              <Link
+                href={`/nav/${item.replace(/ /g, "_")}`}
+                data-selected={item.includes(String(selectedItem))}
+              >
+                <a className={styles.nav__link}>{item}</a>
+              </Link>
+            </li>
+          ))}
       </ul>
     </nav>
   )
