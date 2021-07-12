@@ -13,25 +13,8 @@ const Nav: React.FC<Props & HTMLProps<HTMLElement>> = ({
 }) => {
   const navRef = useRef<HTMLElement>(null)
   const links = useContext(NavContext)
-  const [atTop, setAtTop] = useState(false)
-  const adjust = () => {
-    const fn = () => {
-      if (!navRef.current) return
-      if (navRef.current.getBoundingClientRect().top <= 30)
-        return setAtTop(true)
-      setAtTop(false)
-    }
-    setTimeout(fn, 100)
-  }
-  useEffect(() => {
-    adjust()
-    document.addEventListener("scroll", adjust, true)
-    return () => {
-      document.removeEventListener("scroll", adjust, true)
-    }
-  }, [])
   return (
-    <nav ref={navRef} className={styles.nav} data-top={atTop} {...props}>
+    <nav ref={navRef} className={styles.nav} {...props}>
       <ul className={styles.nav__links}>
         {links &&
           links.map(({ item }, i) => (
