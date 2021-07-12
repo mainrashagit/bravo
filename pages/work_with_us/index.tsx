@@ -2,8 +2,9 @@ import styles from "./workwithus.module.sass"
 import Post from "@modules/post/Post"
 import Nav from "@modules/nav/Nav"
 import SimpleBar from "simplebar-react"
-
 import "simplebar/dist/simplebar.min.css"
+import { v4 as uuid } from "uuid"
+
 
 interface Props {}
 
@@ -111,7 +112,7 @@ const WorkWithUs: React.FC<Props> = ({}) => {
     },
   ]
   const posElements = positions.map(({ title, location }, i) => (
-    <li className={styles.posts__post} key={`position-${i}`}>
+    <li className={styles.posts__post} key={uuid()}>
       <Post title={title} location={location} />
     </li>
   ))

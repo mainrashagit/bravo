@@ -4,7 +4,8 @@ import SimpleBarReact from "simplebar-react"
 import "simplebar/src/simplebar.css"
 import styles from "./index.module.sass"
 import SquareCat from "@modules/squareCat/SquareCat"
-import Cat1 from "@img/cat1.png"
+import Image from "next/image"
+import { v4 as uuid } from "uuid"
 
 interface Cat {
   h: string
@@ -12,11 +13,9 @@ interface Cat {
   doc?: boolean
 }
 
-interface Props {
-  image: string
-}
+interface Props {}
 
-export default function Home({ image }: Props) {
+export default function Home({}: Props) {
   const cats: Cat[] = [
     {
       h: "Operating Agreement (LLC)",
@@ -40,17 +39,33 @@ export default function Home({ image }: Props) {
     <SimpleBarReact>
       <div className={styles.headline}>
         <div className={styles.headline__logo}>
-          <img className={styles.headline__img} src={"/logo.svg"} alt="logo" />
-          <img
-            className={styles.headline__bravo}
-            src={"/bravo.svg"}
-            alt="bravo"
-          />
-          <img
-            className={styles.headline__consulting}
-            src={"/consulting.svg"}
-            alt="consulting"
-          />
+          <div className={styles.headline__img}>
+            <Image
+              layout={"responsive"}
+              width={45}
+              height={45}
+              src={"/logo.svg"}
+              alt="logo"
+            />
+          </div>
+          <div className={styles.headline__bravo}>
+            <Image
+              layout={"responsive"}
+              width={74}
+              height={24}
+              src={"/bravo.svg"}
+              alt="bravo"
+            />
+          </div>
+          <div className={styles.headline__consulting}>
+            <Image
+              layout={"responsive"}
+              width={73}
+              height={15}
+              src={"/consulting.svg"}
+              alt="consulting"
+            />
+          </div>
         </div>
         <div className={styles.headline__tagline}>
           taglinetaglinetaglinetagline
@@ -59,15 +74,13 @@ export default function Home({ image }: Props) {
       <Nav />
       <div className={styles.list}>
         {allCats.map((cat, i) => {
-          i = i + 2
-          if (i > 3) i = Math.ceil(i % 4) + 1
           return (
             <SquareCat
               heading={cat.h}
               subheading={cat.subh}
-              img={Cat1.src}
+              img={"/img/cat1.png"}
               doc={cat.doc}
-              key={`cat-${Math.random() * i}`}
+              key={uuid()}
             />
           )
         })}

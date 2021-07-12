@@ -2,8 +2,9 @@ import styles from "./news.module.sass"
 import Nav from "@modules/nav/Nav"
 import New from "@modules/new/New"
 import SimpleBarReact from "simplebar-react"
-
 import "simplebar/src/simplebar.css"
+import { v4 as uuid } from "uuid"
+
 
 interface Props {}
 
@@ -66,7 +67,7 @@ const News: React.FC<Props> = ({}) => {
   ]
   const newEls = news.map(
     ({ title, subsection, brief, date, comments, views }, i) => (
-      <li className={styles.news__new} key={`new-${i}`}>
+      <li className={styles.news__new} key={uuid()}>
         <New
           title={title}
           subsection={subsection}

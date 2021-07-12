@@ -2,6 +2,7 @@ import styles from "./sidenav.module.sass"
 import { useState } from "react"
 import Link from "next/link"
 import Presentation from "@modules/presentation/Presentation"
+import Image from "next/image"
 
 interface Props {
   scrollDown: boolean
@@ -22,30 +23,46 @@ const SideNav: React.FC<Props> = ({ scrollDown }) => {
         <div className={styles.nav__top}>
           <Link href="/">
             <a className={styles.nav__logo}>
-              <img
-                className={styles.nav__logoMain}
-                src={"/logo.svg"}
-                alt="logo"
-              />
-              <img
-                className={styles.nav__logoBravo}
-                src={"/bravo.svg"}
-                alt="bravo"
-              />
-              <img
-                className={styles.nav__logoConsulting}
-                src={"/consulting.svg"}
-                alt="consulting"
-              />
+              <div className={styles.nav__logoMain}>
+                <Image
+                  layout={"responsive"}
+                  width={45}
+                  height={44}
+                  src={"/logo.svg"}
+                  alt="logo"
+                />
+              </div>
+              <div className={styles.nav__logoBravo}>
+                <Image
+                  layout={"responsive"}
+                  width={74}
+                  height={24}
+                  src={"/bravo.svg"}
+                  alt="bravo"
+                />
+              </div>
+              <div className={styles.nav__logoConsulting}>
+                <Image
+                  layout={"responsive"}
+                  width={73}
+                  height={15}
+                  src={"/consulting.svg"}
+                  alt="consulting"
+                />
+              </div>
             </a>
           </Link>
           <div className={styles.nav__right}>
             <div className={styles.nav__heart}>
-              <img
-                className={styles.nav__heartImg}
-                src={"/heart.svg"}
-                alt="favorite"
-              />
+              <div className={styles.nav__heartImg}>
+                <Image
+                  layout={"responsive"}
+                  width={24}
+                  height={20}
+                  src={"/heart.svg"}
+                  alt="favorite"
+                />
+              </div>
             </div>
             <div className={styles.nav__burger} onClick={toggleBurger}>
               <div className={styles.nav__burgerImg}>
@@ -97,11 +114,15 @@ const SideNav: React.FC<Props> = ({ scrollDown }) => {
               <li className={styles.nav__search}>
                 <label className={styles.nav__searchInputLabel}>
                   <div className={styles.nav__searchInputPlaceholder}>
-                    <img
-                      className={styles.nav__searchGlass}
-                      src={"/glass.svg"}
-                      alt="magnifying glass"
-                    />
+                    <div className={styles.nav__searchGlass}>
+                      <Image
+                        layout={"responsive"}
+                        width={12}
+                        height={12}
+                        src={"/glass.svg"}
+                        alt="magnifying glass"
+                      />
+                    </div>
                     Search
                   </div>
                   <input
@@ -115,29 +136,41 @@ const SideNav: React.FC<Props> = ({ scrollDown }) => {
             <ul className={styles.nav__media}>
               <li className={styles.nav__mediaItem}>
                 <a href="#" className={styles.nav__mediaLink}>
-                  <img
-                    src={"/ig.svg"}
-                    alt="instagram"
-                    className={styles.nav__mediaImg}
-                  />
+                  <div className={styles.nav__mediaImg}>
+                    <Image
+                      layout={"responsive"}
+                      width={20}
+                      height={20}
+                      src={"/ig.svg"}
+                      alt="instagram"
+                    />
+                  </div>
                 </a>
               </li>
               <li className={styles.nav__mediaItem}>
                 <a href="#" className={styles.nav__mediaLink}>
-                  <img
-                    src={"fb.svg"}
-                    alt="instagram"
-                    className={styles.nav__mediaImg}
-                  />
+                  <div className={styles.nav__mediaImg}>
+                    <Image
+                      layout={"responsive"}
+                      width={20}
+                      height={20}
+                      src={"/fb.svg"}
+                      alt="instagram"
+                    />
+                  </div>
                 </a>
               </li>
               <li className={styles.nav__mediaItem}>
                 <a href="#" className={styles.nav__mediaLink}>
-                  <img
-                    src={"pin.svg"}
-                    alt="instagram"
-                    className={styles.nav__mediaImg}
-                  />
+                  <div className={styles.nav__mediaImg}>
+                    <Image
+                      layout={"responsive"}
+                      width={20}
+                      height={20}
+                      src={"/pin.svg"}
+                      alt="instagram"
+                    />
+                  </div>
                 </a>
               </li>
             </ul>

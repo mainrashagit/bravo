@@ -3,6 +3,8 @@ import styles from "./aboutus.module.sass"
 import SimpleBarReact from "simplebar-react"
 import "simplebar/src/simplebar.css"
 import Member from "@modules/member/Member"
+import Image from "next/image"
+import { v4 as uuid } from "uuid"
 
 interface Props {}
 
@@ -59,9 +61,9 @@ const AboutUs: React.FC<Props> = ({}) => {
       img: "member2.png",
     },
   ]
-  const teamItems = team.map(({ name, post, img }, i) => (
-    <li className={styles.team__member} key={Math.random() * i}>
-      <Member name={name} post={post} img={img} />
+  const teamItems = team.map(({ name, post }, i) => (
+    <li className={styles.team__member} key={uuid()}>
+      <Member name={name} post={post} />
     </li>
   ))
   return (
@@ -71,11 +73,15 @@ const AboutUs: React.FC<Props> = ({}) => {
         <div className={styles.content}>
           <div className={styles.about}>
             <div className={styles.about__left}>
-              <img
-                src={"/logo.svg"}
-                alt="logo"
-                className={styles.about__logo}
-              />
+              <div className={styles.about__logo}>
+                <Image
+                  layout={"responsive"}
+                  width={45}
+                  height={45}
+                  src={"/logo.svg"}
+                  alt="logo"
+                />
+              </div>
             </div>
             <div className={styles.about__right}>
               <div className={styles.about__title}>Bravo Consulting</div>
