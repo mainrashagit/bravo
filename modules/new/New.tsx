@@ -1,6 +1,7 @@
 import styles from "./new.module.sass"
 import Image from "next/image"
 import Img from "@img/new1.png"
+import { useEffect, useRef, useState } from "react"
 
 interface Props {
   title: string
@@ -19,15 +20,24 @@ const New: React.FC<Props> = ({
   comments,
   views,
 }) => {
+  const [isOverlay, setIsOverlay] = useState(false)
+  const text$ = useRef<HTMLDivElement>(null)
+  const brief$ = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    if (((brief$.current?.scrollHeight ?? 0) / (text$.current?.scrollHeight ?? 1)) > 0.4) setIsOverlay(true)
+  }, [])
   return (
     <div className={styles.new}>
       <div className={styles.new__img}>
         <Image layout={"fill"} src={Img} />
       </div>
-      <div className={styles.new__text}>
+      <div className={styles.new__text} ref={text$}>
         <div className={styles.new__label}>{subsection}</div>
         <div className={styles.new__title}>{title}</div>
-        <div className={styles.new__brief}>{brief}</div>
+        <div className={styles.new__brief} ref={brief$}>
+          {isOverlay && <div className={styles.new__briefOverlay}></div>}
+          {brief}
+        </div>
         <div className={styles.new__foot}>
           <div className={styles.new__date}>{date}</div>
           <div className={styles.new__stats}>
