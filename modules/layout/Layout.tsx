@@ -1,13 +1,15 @@
 import SideNav from "@modules/sidenav/SideNav"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useContext } from "react"
 import styles from "./layout.module.sass"
 import Bg1 from "@img/bg1.png"
 import Image from "next/image"
+import { NavContext } from "@/context/NavContext"
 
 interface Props {}
 
 const Layout: React.FC<Props> = ({ children }) => {
-  const [scrollDown, setScrollDown] = useState(false)
+  const ctx = useContext(NavContext)
+  const { setScrollDown, scrollDown } = ctx!
   const scrollDiff = useRef(0)
   useEffect(() => {
     const scroll = (e: Event) => {

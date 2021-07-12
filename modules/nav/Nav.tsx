@@ -1,4 +1,4 @@
-import { NavContext } from "@/context/NavContext"
+import { navItems, NavContext } from "@/context/NavContext"
 import { HTMLProps, useContext, useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import styles from "./nav.module.sass"
@@ -12,7 +12,8 @@ const Nav: React.FC<Props & HTMLProps<HTMLElement>> = ({
   ...props
 }) => {
   const navRef = useRef<HTMLElement>(null)
-  const links = useContext(NavContext)
+  const ctx = useContext(NavContext)
+  const { scrollDown } = ctx!
   const [atTop, setAtTop] = useState(false)
   useEffect(() => {
     const adjust = () => {
@@ -27,10 +28,10 @@ const Nav: React.FC<Props & HTMLProps<HTMLElement>> = ({
     }
   }, [])
   return (
-    <nav ref={navRef} className={styles.nav} data-top={atTop} {...props}>
+    <nav ref={navRef} className={styles.nav} data-top={atTop} data-down={!scrollDown} {...props}>
       <ul className={styles.nav__links}>
-        {links &&
-          links.map(({ item }, i) => (
+        {navItems &&
+          navItems.map(({ item }, i) => (
             <li className={styles.nav__li} key={`nav-link-${i}`}>
               <Link
                 href={`/nav/${item.replace(/ /g, "_")}`}

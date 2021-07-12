@@ -10,6 +10,11 @@
     transition: padding-top 0.2s ease, height 0.2s ease
     flex: none
     padding-top: 1.8em
+    transition: top 0.2s
+
+    &[data-down="true"]
+        @media screen and ( max-width: 769px )
+            top: 90px
 
     @media screen and ( max-width: 1367px )
         font-size: 0.75rem
