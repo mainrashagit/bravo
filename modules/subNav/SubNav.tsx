@@ -1,4 +1,4 @@
-import { NavContext } from "@/context/NavContext"
+import { navItems } from "@/context/NavContext"
 import Nav from "@modules/nav/Nav"
 import { useContext } from "react"
 import styles from "./subnav.module.sass"
@@ -11,14 +11,13 @@ interface Props {
 }
 
 const SubNav: React.FC<Props> = ({ selectedNavItem }) => {
-  const items = useContext(NavContext)
   return (
     <>
       <SimpleBarReact>
         <Nav selectedItem={selectedNavItem} />
         <div className={styles.subnav}>
           <ul className={styles.subnav__items}>
-            {items!
+            {navItems
               .filter(({ item }) => item === selectedNavItem)[0]
               .subItems.map((item) => (
                 <li className={styles.subnav__item}>{item}</li>
