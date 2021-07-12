@@ -8,17 +8,9 @@ interface Props {}
 
 const Layout: React.FC<Props> = ({ children }) => {
   const [scrollDown, setScrollDown] = useState(false)
-  const isCooling = useRef<boolean>(false)
-  const setIsCooling = (is: boolean) => {
-    isCooling.current = is
-  }
   const scrollDiff = useRef(0)
-  const cool = () => {
-    setIsCooling(false)
-  }
-  const scroll = (e: Event) => {
-    if (isCooling.current) return false
-    const fn = () => {
+  useEffect(() => {
+    const scroll = (e: Event) => {
       if (!(e.target instanceof HTMLElement)) return
       if (e.target.scrollTop > scrollDiff.current) {
         setScrollDown(true)
@@ -27,20 +19,9 @@ const Layout: React.FC<Props> = ({ children }) => {
       setScrollDown(false)
       scrollDiff.current = e.target.scrollTop
     }
-    fn()
-    setIsCooling(true)
-    setTimeout(cool, 100)
-  }
-  const unScroll = () => {
-    if (isCooling.current) return false
-    const fn = () => {
+    const unScroll = () => {
       setScrollDown(false)
     }
-    fn()
-    setIsCooling(true)
-    setTimeout(cool, 100)
-  }
-  useEffect(() => {
     document.addEventListener("scroll", scroll, true)
     document.addEventListener("click", unScroll, true)
     return () => {
