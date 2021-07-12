@@ -13,6 +13,11 @@ const Layout: React.FC<Props> = ({ children }) => {
   const scrollDiff = useRef(0)
   useEffect(() => {
     const scroll = (e: Event) => {
+      if (
+        document.querySelector(".simplebar-content")?.getBoundingClientRect()
+          .top! > -90
+      )
+        return
       if (!(e.target instanceof HTMLElement)) return
       if (e.target.scrollTop > scrollDiff.current) {
         setScrollDown(true)
@@ -24,6 +29,7 @@ const Layout: React.FC<Props> = ({ children }) => {
     const unScroll = () => {
       setScrollDown(false)
     }
+
     document.addEventListener("scroll", scroll, true)
     document.addEventListener("click", unScroll, true)
     return () => {
