@@ -12,4 +12,8 @@ module.exports = {
     }
     return config
   },
+  images: {
+    loader: 'imgix',
+    path: 'https://bravo.mainrasha.com/',
+  },
 }

@@ -9,6 +9,7 @@
     justify-content: center
     align-items: center
     @extend %position-fit
+    top: 4.375em
 
     @media screen and ( max-width: 1367px )
         font-size: 0.7rem
@@ -20,6 +21,8 @@
         background: #2B2E2F
         max-width: 90%
         width: 40em
+        
+        height: min(32.3125em, 100%)
 
     &__field
         border: 1px solid $yellow
@@ -27,11 +30,9 @@
         flex-direction: column
         justify-content: center
         align-items: center
-        padding: 5em 2em
+        padding: 1em 1em
         gap: 3.125em
-
-        @media screen and ( max-width: 769px )
-            padding: 2em
+        height: 100%
 
     &__title
         text-align: center
