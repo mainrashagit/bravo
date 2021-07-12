@@ -8,14 +8,18 @@
 .content
     font-size: 1rem
     @extend %hide-scrollbar
-    scroll-snap-type: y mandatory
-    overflow-y: scroll
-    height: 100vh
+    @media screen and ( min-width: 991px )
+        scroll-snap-type: y mandatory
+        overflow-y: scroll
+        height: 100vh
+        
     @media screen and ( max-width: 1441px )
         font-size: 0.6rem
 
 .about
-    scroll-snap-align: start
+    @media screen and ( min-width: 991px )
+        scroll-snap-align: start
+        
     display: flex
     min-height: 100vh
     @media screen and ( max-width: 990px )
@@ -62,7 +66,8 @@
             text-align: left
 
 .team
-    scroll-snap-align: start
+    @media screen and ( min-width: 991px )
+        scroll-snap-align: start
     min-height: 100vh
     padding: 3.125em 5.625em 3.125em 6.875em
     display: flex
