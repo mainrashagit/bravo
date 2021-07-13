@@ -4,6 +4,7 @@ import styles from "./layout.module.sass"
 import Bg1 from "@img/bg1.png"
 import Image from "next/image"
 import { NavContext } from "@/context/NavContext"
+import SimpleBar from "simplebar-react"
 
 interface Props {}
 
@@ -42,9 +43,9 @@ const Layout: React.FC<Props> = ({ children }) => {
       <Image layout={"fill"} className={styles.bg} src={Bg1} alt="background" />
       <div className={styles.border}></div>
       <SideNav scrollDown={scrollDown} />
-      <main className={styles.content}>
-        {children}
-      </main>
+      {/* <main className={styles.content}> */}
+        <SimpleBar>{children}</SimpleBar>
+      {/* </main> */}
     </div>
   )
 }

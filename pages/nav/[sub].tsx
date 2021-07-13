@@ -1,6 +1,5 @@
 import Nav from "@modules/nav/Nav"
 import styles from "./subnav.module.sass"
-import SimpleBarReact from "simplebar-react"
 import "simplebar/src/simplebar.css"
 import { ParsedUrlQuery } from "querystring"
 import { GetStaticPaths, GetStaticProps } from "next"
@@ -15,16 +14,16 @@ interface Props {
 const SubNav: React.FC<Props> = ({ sub, items }) => {
   return (
     <>
-      <SimpleBarReact>
-        <Nav selectedItem={sub} />
-        <div className={styles.subnav}>
-          <ul className={styles.subnav__items}>
-            {items.map((item) => (
-              <li className={styles.subnav__item} key={uuid()}>{item}</li>
-            ))}
-          </ul>
-        </div>
-      </SimpleBarReact>
+      <Nav selectedItem={sub} />
+      <div className={styles.subnav}>
+        <ul className={styles.subnav__items}>
+          {items.map((item) => (
+            <li className={styles.subnav__item} key={uuid()}>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
     </>
   )
 }

@@ -1,7 +1,6 @@
 import styles from "./workwithus.module.sass"
 import Post from "@modules/post/Post"
 import Nav from "@modules/nav/Nav"
-import SimpleBar from "simplebar-react"
 import "simplebar/dist/simplebar.min.css"
 import { v4 as uuid } from "uuid"
 
@@ -117,10 +116,10 @@ const WorkWithUs: React.FC<Props> = ({}) => {
     </li>
   ))
   return (
-    <SimpleBar>
+    <>
       <Nav />
       <ul className={styles.posts}>{posElements}</ul>
-    </SimpleBar>
+    </>
   )
 }
 

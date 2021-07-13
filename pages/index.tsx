@@ -1,6 +1,5 @@
 import Nav from "@modules/nav/Nav"
 import Head from "next/head"
-import SimpleBarReact from "simplebar-react"
 import "simplebar/src/simplebar.css"
 import styles from "./index.module.sass"
 import SquareCat from "@modules/squareCat/SquareCat"
@@ -36,7 +35,7 @@ export default function Home({}: Props) {
   ]
   const allCats: Cat[] = [...cats, ...cats, ...cats, ...cats]
   return (
-    <SimpleBarReact>
+    <>
       <div className={styles.headline}>
         <div className={styles.headline__logo}>
           <div className={styles.headline__img}>
@@ -85,6 +84,6 @@ export default function Home({}: Props) {
           )
         })}
       </div>
-    </SimpleBarReact>
+    </>
   )
 }

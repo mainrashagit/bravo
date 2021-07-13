@@ -1,7 +1,6 @@
 import styles from "./news.module.sass"
 import Nav from "@modules/nav/Nav"
 import New from "@modules/new/New"
-import SimpleBarReact from "simplebar-react"
 import "simplebar/src/simplebar.css"
 import { v4 as uuid } from "uuid"
 
@@ -78,14 +77,12 @@ const News: React.FC<Props> = ({}) => {
     )
   )
   return (
-    <SimpleBarReact>
-      <div className={styles.page}>
-        <Nav />
-        <div className={styles.wrapper}>
-          <ul className={styles.news}>{newEls}</ul>
-        </div>
+    <>
+      <Nav />
+      <div className={styles.wrapper}>
+        <ul className={styles.news}>{newEls}</ul>
       </div>
-    </SimpleBarReact>
+    </>
   )
 }
 
