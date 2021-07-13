@@ -23,8 +23,8 @@ const SquareCat: React.FC<Props> = ({ heading, subheading, img, doc }) => {
           <div className={styles.square__docImg}>
             <Image
               layout={"responsive"}
-              width={38}
-              height={39}
+              width={33}
+              height={41}
               src={"/doc.svg"}
               alt="doc"
             />

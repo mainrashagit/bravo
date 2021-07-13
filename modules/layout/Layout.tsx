@@ -35,10 +35,15 @@ const Layout: React.FC<Props> = ({ children }) => {
     document.addEventListener("click", unScroll, true)
 
     const scrollAreas = document.querySelectorAll("[data-simplebar]")
+    const scrollAreas2 = document.querySelectorAll("simplebar-content")
     const resizeHeight = () => {
       scrollAreas.forEach((area) => {
         if (!(area instanceof HTMLElement)) return
         area.style.maxHeight = String(`${window.innerHeight}px`)
+      })
+      scrollAreas2.forEach((area) => {
+        if (!(area instanceof HTMLElement)) return
+        area.style.minHeight = String(`${window.innerHeight}px`)
       })
     }
     resizeHeight()
