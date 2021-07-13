@@ -2,21 +2,23 @@
 
 .content
     font-size: 1rem
-    @extend %hide-scrollbar
+    position: relative
     @media screen and ( min-width: 991px )
-        scroll-snap-type: y mandatory
-        overflow-y: scroll
+        // scroll-snap-type: y mandatory
+        // overflow-y: scroll
+        // height: 100%
         height: 100vh
-        
+        overflow: hidden
+
     @media screen and ( max-width: 1441px )
         font-size: 0.6rem
 
 .about
     @media screen and ( min-width: 991px )
-        scroll-snap-align: start
-        
-    display: flex
-    min-height: 100vh
+        // scroll-snap-align: start
+
+        display: flex
+        min-height: 100vh
     @media screen and ( max-width: 990px )
         flex-direction: column
 
@@ -25,6 +27,11 @@
         width: 100%
         height: 100vh
         padding: 8.5em
+
+        @media screen and ( min-width: 990px )
+            transition: transform 0.2s ease-out
+            &[data-hidden="true"]
+                transform: translateX(-100%)
 
     &__logo
         position: relative
@@ -48,6 +55,11 @@
         font-size: 1.1875em
         font-weight: 700
 
+        @media screen and ( min-width: 990px )
+            transition: transform 0.2s ease-out
+            &[data-hidden="true"]
+                transform: translateX(100%)
+
         @media screen and ( max-width: 990px )
             padding: 2em 5%
 
@@ -60,18 +72,28 @@
         @media screen and ( max-width: 321px )
             text-align: left
 
+.teamWrapper
+
+    @media screen and ( min-width: 990px )
+        position: absolute
+        top: 0
+        left: 0
+        right: 0
+        transition: top 0.2s ease-out
+        &[data-hidden="true"]
+            top: 100%
+
 .team
-    @media screen and ( min-width: 991px )
-        scroll-snap-align: start
-    min-height: 100vh
-    padding: 3.125em 5.625em 3.125em 6.875em
     display: flex
     flex-direction: column
     gap: 3.125em
-    background: $black
+    @media screen and ( min-width: 991px )
+        min-height: 100vh
+        padding: 3.125em 5.625em 3.125em 6.875em
 
-    @media screen and ( max-width: 990px )
+    @media screen and ( max-width: 1440px )
         padding: 3.125em 5% 3.125em
+        background: $black
 
     &__title
         padding-top: 3.125em
@@ -81,5 +103,14 @@
 
     &__members
         display: grid
-        grid-template-columns: repeat(auto-fit, minmax(20.125em, 1fr))
+        grid-template-columns: repeat(4, 1fr)
         justify-content: center
+
+        @media screen and ( max-width: 990px )
+            grid-template-columns: repeat(2, 1fr)
+
+        @media screen and ( max-width: 400px )
+            grid-template-columns: 1fr
+
+    &__member
+        box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.45)
