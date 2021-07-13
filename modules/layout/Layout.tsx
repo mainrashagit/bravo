@@ -31,12 +31,22 @@ const Layout: React.FC<Props> = ({ children }) => {
     const unScroll = () => {
       setScrollDown(false)
     }
-
     document.addEventListener("scroll", scroll, true)
     document.addEventListener("click", unScroll, true)
+
+    const scrollAreas = document.querySelectorAll("[data-simplebar]")
+    const resizeHeight = () => {
+      scrollAreas.forEach((area) => {
+        if (!(area instanceof HTMLElement)) return
+        area.style.maxHeight = String(`${window.innerHeight}px`)
+      })
+    }
+    resizeHeight()
+    window.addEventListener("resize", resizeHeight)
     return () => {
       document.removeEventListener("scroll", scroll, true)
       document.removeEventListener("click", unScroll, true)
+      window.removeEventListener("resize", resizeHeight)
     }
   }, [])
   return (
