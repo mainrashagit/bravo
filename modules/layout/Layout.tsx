@@ -19,7 +19,7 @@ const Layout: React.FC<Props> = ({ children }) => {
         document.querySelector(".simplebar-content")?.getBoundingClientRect()
           .top! > -90
       )
-        return
+        return setScrollDown(false)
       if (!(e.target instanceof HTMLElement)) return
       if (e.target.scrollTop > scrollDiff.current) {
         setScrollDown(true)
