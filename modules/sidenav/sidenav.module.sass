@@ -141,16 +141,16 @@
             right: 0
 
             display: block
-            height: 100vh
+            height: calc(100vh - 90px)
             max-height: 0
 
             background: #000000d2
 
             overflow: hidden
-            transition: max-height 0.2s, padding 0.2s
+            transition: max-height 0.2s
 
         &[data-active="true"]
-            max-height: 100vh
+            max-height: calc(100vh - 90px)
 
     &__links
         display: flex
