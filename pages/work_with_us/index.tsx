@@ -1,7 +1,6 @@
 import styles from "./workwithus.module.sass"
 import Post from "@modules/post/Post"
 import Nav from "@modules/nav/Nav"
-import "simplebar/dist/simplebar.min.css"
 import { v4 as uuid } from "uuid"
 
 

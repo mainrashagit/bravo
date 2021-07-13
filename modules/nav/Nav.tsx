@@ -43,7 +43,7 @@ const Nav: React.FC<Props & HTMLProps<HTMLElement>> = ({
             )
             return (
               <li className={styles.nav__li} key={`nav-link-${i}`}>
-                <Link href={`/nav/${item.replace(/ /g, "_")}`}>
+                <Link href={`/nav/${item.replace(/ /g, "_")}.html`}>
                   <a className={styles.nav__link} data-selected={includes}>
                     {item}
                   </a>

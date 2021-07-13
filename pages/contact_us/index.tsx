@@ -8,34 +8,18 @@ const ContactUs: React.FC<Props> = ({}) => {
   return (
     <>
       <Nav />
-      <div className={styles.page}>
-        <form className={styles.contactForm}>
-          <fieldset className={styles.contactForm__field}>
-            <legend className={styles.contactForm__title}>Contact Us</legend>
-            <div className={styles.contactForm__inputs}>
-              <input
-                className={styles.contactForm__input}
-                type="text"
-                placeholder="Name"
-              />
-              <input
-                className={styles.contactForm__input}
-                type="text"
-                placeholder="Phone"
-              />
-              <input
-                className={styles.contactForm__input}
-                type="text"
-                placeholder="Topic or Appeal"
-              />
-              <input
-                className={styles.contactForm__submit}
-                type="submit"
-                value="Send"
-              />
+      <div className={styles.wrapper}>
+        <form className={styles.form}>
+          <fieldset className={styles.form__field}>
+            <legend className={styles.form__title}>Contact Us</legend>
+            <div className={styles.form__inputs}>
+              <input type="text" className={styles.form__input} placeholder={"Name"} />
+              <input type="text" className={styles.form__input} placeholder={"Phone"} />
+              <input type="text" className={styles.form__input} placeholder={"Topic or Appeal"} />
+              <input type="submit" className={styles.form__submit} value={"Send"} />
             </div>
-            <ul className={styles.contactForm__media}>
-              <li className={styles.contactForm__link}>
+            <ul className={styles.form__media}>
+              <li className={styles.form__link}>
                 <a href="#">
                   <Image
                     layout={"responsive"}
@@ -46,7 +30,7 @@ const ContactUs: React.FC<Props> = ({}) => {
                   />
                 </a>
               </li>
-              <li className={styles.contactForm__link}>
+              <li className={styles.form__link}>
                 <a href="#">
                   <Image
                     layout={"responsive"}
@@ -57,7 +41,7 @@ const ContactUs: React.FC<Props> = ({}) => {
                   />
                 </a>
               </li>
-              <li className={styles.contactForm__link}>
+              <li className={styles.form__link}>
                 <a href="#">
                   <Image
                     layout={"responsive"}
@@ -68,7 +52,7 @@ const ContactUs: React.FC<Props> = ({}) => {
                   />
                 </a>
               </li>
-              <li className={styles.contactForm__envelope}>
+              <li className={styles.form__envelope}>
                 <a href="#">
                   <Image
                     layout={"responsive"}

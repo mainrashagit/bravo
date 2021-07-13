@@ -1,7 +1,6 @@
 import styles from "./news.module.sass"
 import Nav from "@modules/nav/Nav"
 import New from "@modules/new/New"
-import "simplebar/src/simplebar.css"
 import { v4 as uuid } from "uuid"
 
 interface Props {}

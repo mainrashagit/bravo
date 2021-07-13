@@ -1,6 +1,5 @@
 import Nav from "@modules/nav/Nav"
 import Head from "next/head"
-import "simplebar/src/simplebar.css"
 import styles from "./index.module.sass"
 import SquareCat from "@modules/squareCat/SquareCat"
 import Image from "next/image"

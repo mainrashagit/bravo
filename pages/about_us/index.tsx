@@ -1,6 +1,5 @@
 import Nav from "@modules/nav/Nav"
 import styles from "./aboutus.module.sass"
-import "simplebar/src/simplebar.css"
 import Member from "@modules/member/Member"
 import Image from "next/image"
 import { v4 as uuid } from "uuid"

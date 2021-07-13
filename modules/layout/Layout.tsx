@@ -5,6 +5,7 @@ import Bg1 from "@img/bg1.png"
 import Image from "next/image"
 import { NavContext } from "@/context/NavContext"
 import SimpleBar from "simplebar-react"
+import "simplebar/src/simplebar.css"
 
 interface Props {}
 

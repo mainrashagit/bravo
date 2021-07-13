@@ -1,17 +1,16 @@
 @use "@/styles/helpers" as *
 
-.page
-    padding: 10vh 0
+.wrapper
+    position: relative
+    min-height: 100vh
     @extend %flex-center
 
-.contactForm
+.form
     padding: 0.9375em
     border-radius: 15px
     background: #2B2E2F
-    width: min(40em, 90%)
 
-    @media screen and ( max-width: 1367px )
-        font-size: 0.7rem
+    width: min(40em, 90%)
 
     &__field
         border: 1px solid $yellow

@@ -1,6 +1,5 @@
 import Nav from "@modules/nav/Nav"
 import styles from "./subnav.module.sass"
-import "simplebar/src/simplebar.css"
 import { ParsedUrlQuery } from "querystring"
 import { GetStaticPaths, GetStaticProps } from "next"
 import { navItems } from "@/context/NavContext"
