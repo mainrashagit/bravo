@@ -1,15 +1,16 @@
 import Nav from "@modules/nav/Nav"
 import styles from "./contactus.module.sass"
 import Image from "next/image"
+import SimpleBar from "simplebar-react"
 
 interface Props {}
 
 const ContactUs: React.FC<Props> = ({}) => {
   return (
-    <div className={styles.page}>
+    <SimpleBar>
         <Nav />
+      <div className={styles.page}>
         <form className={styles.contactForm}>
-          <div className={styles.contactForm__wrapper}>
             <fieldset className={styles.contactForm__field}>
               <legend className={styles.contactForm__title}>Contact Us</legend>
               <div className={styles.contactForm__inputs}>
@@ -57,9 +58,9 @@ const ContactUs: React.FC<Props> = ({}) => {
                 </li>
               </ul>
             </fieldset>
-          </div>
         </form>
     </div>
+        </SimpleBar>
   )
 }
 

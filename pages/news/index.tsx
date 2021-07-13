@@ -5,7 +5,6 @@ import SimpleBarReact from "simplebar-react"
 import "simplebar/src/simplebar.css"
 import { v4 as uuid } from "uuid"
 
-
 interface Props {}
 
 const News: React.FC<Props> = ({}) => {
@@ -40,8 +39,7 @@ const News: React.FC<Props> = ({}) => {
     {
       title: "How to build a successful career in consulting?",
       subsection: "Subsection",
-      brief:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+      brief: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       date: "06 jun 2021",
       comments: 36,
       views: "1024",
@@ -80,14 +78,14 @@ const News: React.FC<Props> = ({}) => {
     )
   )
   return (
-    <div className={styles.page}>
-      <SimpleBarReact>
+    <SimpleBarReact>
+      <div className={styles.page}>
         <Nav />
         <div className={styles.wrapper}>
           <ul className={styles.news}>{newEls}</ul>
         </div>
-      </SimpleBarReact>
-    </div>
+      </div>
+    </SimpleBarReact>
   )
 }
 

@@ -7,7 +7,6 @@
     position: sticky
     top: 0
     z-index: 10
-    transition: padding-top 0.2s ease, height 0.2s ease
     flex: none
     padding-top: 1.8em
     transition: top 0.2s
@@ -27,11 +26,7 @@
         flex-wrap: wrap
 
     &__link
-        width: 100%
-        height: 100%
-        display: flex
-        justify-content: center
-        align-items: center
+        @extend %flex-center
 
         &[data-selected="true"]
             opacity: 0.4

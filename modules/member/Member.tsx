@@ -10,13 +10,11 @@ interface Props {
 const Member: React.FC<Props> = ({ name, post }) => {
   return (
     <div className={styles.member}>
-      <div className="" style={{ width: "100%", height: "24em" }}>
+      <div style={{ width: "100%", height: "24em" }}>
         <Image
           layout={"fill"}
           className={styles.member__img}
-          blurDataURL={"data:text/plain;base64,SGVsbG8sIFdvcmxkIQ=="}
           src={Member1.src}
-          placeholder={"blur"}
           alt={name}
         />
       </div>

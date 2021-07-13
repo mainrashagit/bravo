@@ -8,15 +8,15 @@ import { navItems } from "@/context/NavContext"
 import { v4 as uuid } from "uuid"
 
 interface Props {
-  selectedNavItem: string
+  sub: string
   items: string[]
 }
 
-const SubNav: React.FC<Props> = ({ selectedNavItem, items }) => {
+const SubNav: React.FC<Props> = ({ sub, items }) => {
   return (
     <>
       <SimpleBarReact>
-        <Nav selectedItem={selectedNavItem} />
+        <Nav selectedItem={sub} />
         <div className={styles.subnav}>
           <ul className={styles.subnav__items}>
             {items.map((item) => (
@@ -47,5 +47,5 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const items = navItems.filter(
     (navItem) => navItem.item.replace(/ /g, "_") === sub
   )[0].subItems
-  return { props: { items } }
+  return { props: { items, sub } }
 }

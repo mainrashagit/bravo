@@ -28,19 +28,29 @@ const Nav: React.FC<Props & HTMLProps<HTMLElement>> = ({
     }
   }, [])
   return (
-    <nav ref={navRef} className={styles.nav} data-top={atTop} data-down={!scrollDown} {...props}>
+    <nav
+      ref={navRef}
+      className={styles.nav}
+      data-top={atTop}
+      data-down={!scrollDown}
+      {...props}
+    >
       <ul className={styles.nav__links}>
         {navItems &&
-          navItems.map(({ item }, i) => (
-            <li className={styles.nav__li} key={`nav-link-${i}`}>
-              <Link
-                href={`/nav/${item.replace(/ /g, "_")}`}
-                data-selected={item.includes(String(selectedItem))}
-              >
-                <a className={styles.nav__link}>{item}</a>
-              </Link>
-            </li>
-          ))}
+          navItems.map(({ item }, i) => {
+            const includes = item.includes(
+              String(selectedItem).replace(/_/g, " ")
+            )
+            return (
+              <li className={styles.nav__li} key={`nav-link-${i}`}>
+                <Link href={`/nav/${item.replace(/ /g, "_")}`}>
+                  <a className={styles.nav__link} data-selected={includes}>
+                    {item}
+                  </a>
+                </Link>
+              </li>
+            )
+          })}
       </ul>
     </nav>
   )

@@ -60,8 +60,6 @@
 
     &__top
         font-size: 1rem
-        position: relative
-        z-index: 3
         @media screen and ( max-width: 1367px )
             font-size: 0.8rem
         @media screen and ( max-width: 769px )
@@ -70,7 +68,6 @@
             align-items: center
             padding: 1.2em 3.5em 0
             font-size: 0.6rem
-            height: 5.625rem
 
         @media screen and ( max-width: 321px )
             font-size: 0.4rem
@@ -135,21 +132,23 @@
         gap: 3em
         height: 55%
         @media screen and ( max-width: 769px )
-            top: 100%
-            z-index: 2
             position: absolute
+            z-index: 2
+            top: 100%
             left: 0
             right: 0
-            background: #000000d2
-            height: 100vh
-            justify-content: initial
-            gap: 0
+
+            display: block
+            height: calc(100vh - 90px)
             max-height: 0
-            padding: 0
+
+            background: #000000d2
+
             overflow: hidden
             transition: max-height 0.2s, padding 0.2s
+
         &[data-active="true"]
-            max-height: 100vh
+            max-height: calc(100vh - 90px)
 
     &__links
         display: flex
@@ -179,8 +178,9 @@
             display: none
 
     &__search
-        width: 100%
-        padding: 0 1em
+        width: 80%
+        padding: 0.75em 1em
+        position: relative
 
         @media screen and ( max-width: 768px )
             width: 11.5625rem
@@ -189,36 +189,27 @@
             width: 1em
 
         &InputLabel
-            position: relative
             @extend %flex-center
-            width: 100%
-            height: 100%
             cursor: text
 
         &Input
             position: absolute
-            top: 0
-            left: 0
             width: 0
-            padding: 0.75em 0
+            height: 100%
             border: none
             border-radius: 0.185rem
             box-shadow: 1px 1px 3px 0px #00000099 inset
-            font-size: 0.7em
+            font-size: 0.8em
             line-height: 1.2
-            transition: left .2s ease-out, width .2s ease-out, padding .2s ease-out
+            transition: width .2s ease-out, padding .2s ease-out
             outline: none
+            text-transform: none
 
             &:focus
                 padding: 0.75em 1.25em
-                left: 0
                 width: 100%
 
         &InputPlaceholder
-            position: absolute
-            top: 70%
-            left: 0
-            width: 100%
             @extend %flex-center
             gap: 0.3125em
 
