@@ -16,7 +16,6 @@
     background: rgba(16, 18, 19, 0.5)
     flex: none
     padding-left: 1em
-    transition: max-height 0.2s ease
 
     @media screen and ( max-width: 1367px )
         font-size: 0.5625rem
@@ -30,6 +29,7 @@
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25)
         position: fixed
         overflow: visible
+        transition: max-height 0.2s ease
         &[data-hidden="true"]
             max-height: 0
             overflow: hidden
@@ -57,6 +57,7 @@
             display: flex
 
         &Img
+            cursor: pointer
             width: 3.75em
             height: 3.125em
 
@@ -159,14 +160,14 @@
         gap: 0.625em
         @media screen and ( max-width: 769px )
             padding: 3.4375rem 0 0.9375rem
-            background:#000000
+            background: #000000
 
     &__bottom
         display: flex
         flex-direction: column
         gap: min(5em, 4vh)
         @media screen and ( max-width: 769px )
-            background:#000000
+            background: #000000
             padding: 0.9375rem 0 3.4375rem
 
     &__misc
@@ -176,6 +177,7 @@
         gap: 0.625em
 
     &__fav
+        cursor: pointer
         @media screen and ( max-width: 768px )
             display: none
 
@@ -193,6 +195,9 @@
         &InputLabel
             @extend %flex-center
             cursor: text
+            transition: opacity 0.2s
+            &:hover
+                opacity: 0.7
 
         &Input
             position: absolute
@@ -219,7 +224,7 @@
         display: flex
         justify-content: center
         align-items: center
-        
+
         &Img
             width: 1.6em
             height: 1.6em
