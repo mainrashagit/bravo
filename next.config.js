@@ -16,4 +16,5 @@ module.exports = {
     loader: 'imgix',
     path: 'https://bravo.mainrasha.com/',
   },
+  trailingSlash: true
 }
