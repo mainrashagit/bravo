@@ -195,9 +195,6 @@
         &InputLabel
             @extend %flex-center
             cursor: text
-            transition: opacity 0.2s
-            &:hover
-                opacity: 0.4
 
         &Input
             position: absolute
@@ -219,6 +216,11 @@
         &InputPlaceholder
             @extend %flex-center
             gap: 0.3125em
+            width: 100%
+
+            transition: opacity 0.2s
+            &:hover
+                opacity: 0.4
 
     &__media
         display: flex
