@@ -90,7 +90,7 @@ const SideNav: React.FC<Props> = ({ scrollDown }) => {
           <ul className={styles.nav__links}>
             <li className={styles.nav__link}>
               <Link href="/about_us">
-                <a>About Us</a>
+                <a onClick={offBurger}>About Us</a>
               </Link>
             </li>
             <li className={styles.nav__link}>
@@ -98,17 +98,17 @@ const SideNav: React.FC<Props> = ({ scrollDown }) => {
             </li>
             <li className={styles.nav__link}>
               <Link href="/contact_us">
-                <a>Contact Us</a>
+                <a onClick={offBurger}>Contact Us</a>
               </Link>
             </li>
             <li className={styles.nav__link}>
               <Link href="/work_with_us">
-                <a>Work with Us</a>
+                <a onClick={offBurger}>Work with Us</a>
               </Link>
             </li>
             <li className={styles.nav__link}>
               <Link href="/news">
-                <a>News</a>
+                <a onClick={offBurger}>News</a>
               </Link>
             </li>
           </ul>
