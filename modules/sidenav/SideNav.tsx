@@ -26,7 +26,7 @@ const SideNav: React.FC<Props> = ({ scrollDown }) => {
       <aside className={styles.nav} data-hidden={scrollDown}>
         <div className={styles.nav__top}>
           <Link href="/">
-            <a className={styles.nav__logo}>
+            <a className={styles.nav__logo} onClick={offBurger}>
               <div className={styles.nav__logoMain}>
                 <Image
                   layout={"responsive"}
