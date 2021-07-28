@@ -1,20 +1,21 @@
 import Image from "next/image"
 import styles from "./member.module.sass"
-import Member1 from "@img/member1.png"
+// import Member1 from "@img/member1.png"
 
 interface Props {
   name: string
   post: string
+  img: string
 }
 
-const Member: React.FC<Props> = ({ name, post }) => {
+const Member: React.FC<Props> = ({ name, post, img }) => {
   return (
     <div className={styles.member}>
       <div style={{ width: "100%", height: "24em" }}>
         <Image
           layout={"fill"}
           className={styles.member__img}
-          src={Member1.src}
+          src={`/img/${img}`}
           alt={name}
         />
       </div>

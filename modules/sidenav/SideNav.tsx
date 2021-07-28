@@ -1,8 +1,9 @@
 import styles from "./sidenav.module.sass"
-import { useState, MouseEvent } from "react"
+import { useState, MouseEvent, useEffect } from "react"
 import Link from "next/link"
 import Presentation from "@modules/presentation/Presentation"
 import Image from "next/image"
+import { useRouter } from 'next/router'
 
 interface Props {
   scrollDown: boolean
@@ -21,6 +22,17 @@ const SideNav: React.FC<Props> = ({ scrollDown }) => {
     if (e.target !== e.currentTarget) return
     setBurger(false)
   }
+
+  const { asPath, locale, defaultLocale } = useRouter()
+  useEffect(() => {
+    const date = new Date()
+    const expireMs = 100 * 24 * 60 * 60 * 1000 // 100 days
+    date.setTime(date.getTime() + expireMs)
+    document.cookie = `NEXT_LOCALE=${locale};expires=${date.toUTCString()};path=/`
+    return () => {
+
+    }
+  }, [locale])
   return (
     <>
       <aside className={styles.nav} data-hidden={scrollDown}>
@@ -176,6 +188,31 @@ const SideNav: React.FC<Props> = ({ scrollDown }) => {
                     />
                   </div>
                 </a>
+              </li>
+            </ul>
+            <ul className={styles.nav__lang}>
+              <li data-selected={locale === "ru"}>
+                <Link href={asPath} locale="ru">
+                  <a>
+                    ru
+                  </a>
+                </Link>
+              </li>
+              <span className={styles.nav__langPipe}></span>
+              <li data-selected={locale === "en"}>
+                <Link href={asPath} locale="en">
+                  <a>
+                    en
+                  </a>
+                </Link>
+              </li>
+              <span className={styles.nav__langPipe}></span>
+              <li data-selected={locale === "de"}>
+                <Link href={asPath} locale="de">
+                  <a>
+                    de
+                  </a>
+                </Link>
               </li>
             </ul>
             <div className={styles.nav__copy}>

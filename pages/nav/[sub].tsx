@@ -33,10 +33,12 @@ interface IParams extends ParsedUrlQuery {
   sub: string
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = navItems.map(({ item }) => ({
+export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
+  const loc = locales ?? ["en"]
+  const paths = loc.map(locale => navItems.map(({ item }) => ({
     params: { sub: item.replace(/ /g, "_") },
-  }))
+    locale
+  }))).flat(1)
   return { paths, fallback: false }
 }
 

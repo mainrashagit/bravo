@@ -16,5 +16,9 @@ module.exports = {
     loader: 'imgix',
     path: 'https://bravo.mainrasha.com/',
   },
-  trailingSlash: true
+  trailingSlash: true,
+  i18n: {
+    locales: ["en", "de", "ru"],
+    defaultLocale: "en",
+  }
 }

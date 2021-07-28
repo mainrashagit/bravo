@@ -189,6 +189,9 @@
         @media screen and ( max-width: 768px )
             width: 11.5625rem
 
+        @media screen and ( min-width: 769px )
+            margin-bottom: 1em
+
         &Glass
             width: 1em
 
@@ -223,9 +226,7 @@
                 opacity: 0.4
 
     &__media
-        display: flex
-        justify-content: center
-        align-items: center
+        @extend %flex-center
 
         &Img
             width: 1.6em
@@ -234,6 +235,26 @@
         &Link
             @extend %flex-center
             padding: 0.4em
+
+    &__lang
+        @extend %flex-center
+        gap: 5px
+
+        &Pipe
+            border-left: 2px solid #fff
+            opacity: 1.4
+            height: 100%
+
+        & >
+            [data-selected="true"]
+                opacity: 0.4
+
+            li
+                cursor: pointer
+                user-select: none
+                transition: opacity 0.2s ease
+                &:hover
+                    opacity: 0.4
 
     &__copy
         font-size: 0.8em
