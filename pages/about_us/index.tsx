@@ -101,20 +101,6 @@ const AboutUs: React.FC<Props> = ({ locale }) => {
       media.removeEventListener("change", watch)
     }
   }, [])
-
-  // useEffect(() => {
-  //   function persistLocaleCookie() {
-  //     if(locale !== defaultLocale) {
-  //        const date = new Date()
-  //        const expireMs = 100 * 24 * 60 * 60 * 1000 // 100 days
-  //        date.setTime(date.getTime() + expireMs)
-  //        document.cookie = `NEXT_LOCALE=${locale};expires=${date.toUTCString()};path=/`
-  //     }
-  //   }
-  //   return () => {
-
-  //   }
-  // }, [])
   return (
     <>
       <div className={styles.content}>
@@ -153,7 +139,7 @@ const AboutUs: React.FC<Props> = ({ locale }) => {
           </div>
         ) : (
           <div className={styles.teamWrapper} data-hidden={isTop}>
-            <SimpleBar>
+            <SimpleBar forceVisible={true}>
               <div className={styles.team} ref={team$}>
                 <div className={styles.team__title}>Our Team</div>
                 <ul className={styles.team__members}>{teamItems}</ul>
