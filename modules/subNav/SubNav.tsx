@@ -1,4 +1,3 @@
-import { navItems } from "@/context/NavContext"
 import Nav from "@modules/nav/Nav"
 import styles from "./subnav.module.sass"
 import SimpleBarReact from "simplebar-react"
@@ -19,11 +18,11 @@ const SubNav: React.FC<Props> = ({ selectedNavItem }) => {
         <Nav selectedItem={selectedNavItem} />
         <div className={styles.subnav}>
           <ul className={styles.subnav__items}>
-            {
+            {/* {
               <li className={styles.subnav__item}>{navItems
                 .filter(({ item }) => item === selectedNavItem)[0]
                 .subItems[loc]}</li>
-            }
+            } */}
           </ul>
         </div>
       </SimpleBarReact>
