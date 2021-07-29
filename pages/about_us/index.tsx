@@ -6,12 +6,17 @@ import { v4 as uuid } from "uuid"
 import { useEffect, useRef, useState } from "react"
 import SimpleBar from "simplebar-react"
 import "simplebar/src/simplebar.css"
+import { getAboutUs } from "../../lib/api/lang"
 
 interface Props {
-  locale: any
- }
+  content: {
+    about: string;
+    members: string;
+    title: string
+  }
+}
 
-const AboutUs: React.FC<Props> = ({ locale }) => {
+const AboutUs: React.FC<Props> = ({ content: { about } }) => {
   const team = [
     {
       name: "Darlene Robertson",
@@ -90,7 +95,6 @@ const AboutUs: React.FC<Props> = ({ locale }) => {
   }, [isTop, isSmall])
 
   useEffect(() => {
-    console.log(locale)
     const watch = (e: MediaQueryListEvent) => {
       setIsSmall(e.matches)
     }
@@ -127,7 +131,7 @@ const AboutUs: React.FC<Props> = ({ locale }) => {
           <div className={styles.about__right} data-hidden={!isTop}>
             <div className={styles.about__title}>Bravo Consulting</div>
             <p>
-              {locale.about}
+              {about}
             </p>
           </div>
         </div>
@@ -139,7 +143,7 @@ const AboutUs: React.FC<Props> = ({ locale }) => {
           </div>
         ) : (
           <div className={styles.teamWrapper} data-hidden={isTop}>
-            <SimpleBar forceVisible={true}>
+            <SimpleBar forceVisible={true} style={{ maxHeight: "100vh" }}>
               <div className={styles.team} ref={team$}>
                 <div className={styles.team__title}>Our Team</div>
                 <ul className={styles.team__members}>{teamItems}</ul>
@@ -155,36 +159,13 @@ const AboutUs: React.FC<Props> = ({ locale }) => {
 export default AboutUs
 
 export async function getStaticProps({ locale }: { locale: string }) {
-  // Call an external API endpoint to get posts.
-  // You can use any data fetching library
-  // const res = await fetch(`https://.../posts?locale=${locale}`)
-  // const posts = await res.json()
 
-  // if (posts.length === 0) {
-  //   return {
-  //     notFound: true,
-  //   }
-  // }
-
-  const de = {
-    about: "BRAVO CONSULTING ist eine internationale Beratungsagentur, die innovative Lösungen für Ihre Organisationsentwicklung anbietet. Die besten Anwälte, Finanzexperten und Buchhalter helfen Ihnen bei der Organisation der Buchhaltung, der Besteuerung, der Finanzen und der rechtlichen Aspekte Ihres Unternehmens. (Вписать несколько крупных клиентов) und andere Unternehmen haben sich bereits von der Effizienz der Zusammenarbeit mit uns überzeugt. BRAVO CONSULTING - Schnelles und Einfaches Wachstum für Ihr Unternehmen"
-  }
-  const en = {
-    about: "BRAVO CONSULTING is an international consulting agency that provides innovative solutions for your organization development. Best lawyers, financiers and accountants will assist in organizing your company’s accounting, taxation, finance and legal aspects. (Вписать несколько крупных клиентов) and other companies have already ensured the effectiveness of working with us. BRAVO CONSULTING — Fast and Easy Growth for Your Business"
-  }
-  const ru = {
-    about: "«БРАВО КОНСАЛТИНГ» — международное консалтинговое агентство предоставляющее инновационные решения для развития вашей организации. Ведущие юристы, финансисты, бухгалтера помогут организовать порядок в сферах бухгалтерского учета, налогообложения, финансирования и правовыми аспектами. В эффективности работы с нами уже убедились (вписать несколько крупных клиентов) и другие компании. С «БРАВО КОНСАЛТИНГ» масштабировать бизнес быстро и легко. "
-  }
-
-  const locales: { [locale: string]: any } = {
-    de, en, ru
-  }
-
+  const content = await getAboutUs(locale)
   // By returning { props: posts }, the Blog component
   // will receive `posts` as a prop at build time
   return {
     props: {
-      locale: locales[locale],
+      content,
     },
   }
 }

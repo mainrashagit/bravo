@@ -2,25 +2,34 @@ import Nav from "@modules/nav/Nav"
 import styles from "./subnav.module.sass"
 import { ParsedUrlQuery } from "querystring"
 import { GetStaticPaths, GetStaticProps } from "next"
-import { navItems } from "@/context/NavContext"
 import { v4 as uuid } from "uuid"
+import { getNavItemContent, getNavTitles } from "../../lib/api/lang"
 
 interface Props {
   sub: string
-  items: string[]
+  item: string
 }
 
-const SubNav: React.FC<Props> = ({ sub, items }) => {
+const SubNav: React.FC<Props> = ({ sub, item }) => {
   return (
     <>
       <Nav selectedItem={sub} />
       <div className={styles.subnav}>
+        <div className={styles.subnav__itemMain}>{item}</div>
         <ul className={styles.subnav__items}>
-          {items.map((item) => (
-            <li className={styles.subnav__item} key={uuid()}>
-              {item}
-            </li>
-          ))}
+
+          <li className={styles.subnav__item} key={uuid()}>
+            Item1
+          </li>
+          <li className={styles.subnav__item} key={uuid()}>
+            Item2
+          </li>
+          <li className={styles.subnav__item} key={uuid()}>
+            Item3
+          </li>
+          <li className={styles.subnav__item} key={uuid()}>
+            Item4
+          </li>
         </ul>
       </div>
     </>
@@ -35,8 +44,9 @@ interface IParams extends ParsedUrlQuery {
 
 export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
   const loc = locales ?? ["en"]
-  const paths = loc.map(locale => navItems.map(({ item }) => ({
-    params: { sub: item.replace(/ /g, "_") },
+  const items = await getNavTitles()
+  const paths = loc.map(locale => Object.entries(items).map(([key, val]) => ({
+    params: { sub: key.replace(/ /g, "_") },
     locale
   }))).flat(1)
   return { paths, fallback: false }
@@ -44,8 +54,8 @@ export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const { sub } = context.params as IParams
-  const items = navItems.filter(
-    (navItem) => navItem.item.replace(/ /g, "_") === sub
-  )[0].subItems
-  return { props: { items, sub } }
+  const { locale } = context
+  const loc = typeof locale === "string" ? locale : "en"
+  const item = await getNavItemContent(sub, loc)
+  return { props: { item, sub } }
 }

@@ -79,6 +79,7 @@ export default function Home({}: Props) {
               img={"/img/cat1.png"}
               doc={cat.doc}
               key={uuid()}
+              link={"/docs/doc"}
             />
           )
         })}

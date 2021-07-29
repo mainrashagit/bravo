@@ -71,6 +71,7 @@ const News: React.FC<Props> = ({}) => {
           date={date}
           comments={comments}
           views={views}
+          link={"/news/new1"}
         />
       </li>
     )

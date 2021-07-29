@@ -38,3 +38,16 @@
         line-height: 1.27
         text-align: center
         overflow-wrap: break-word
+
+        &Main
+            @extend .subnav__item
+            margin-bottom: 21px
+            position: relative
+            z-index: 2
+            width: min(46em, 80%)
+            margin: 0 auto 21px
+            text-align: left
+            padding: 20px
+
+            @media screen and ( max-width: 769px )
+                width: min(23em, 90%)

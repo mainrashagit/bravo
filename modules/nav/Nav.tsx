@@ -1,7 +1,10 @@
-import { navItems, NavContext } from "@/context/NavContext"
+import { NavContext } from "@/context/NavContext"
 import { HTMLProps, useContext, useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import styles from "./nav.module.sass"
+import { v4 as uuid } from "uuid"
+import { getNavTitles } from "../../lib/api/lang"
+import { useRouter } from "next/router"
 
 interface Props {
   selectedItem?: string
@@ -15,6 +18,8 @@ const Nav: React.FC<Props & HTMLProps<HTMLElement>> = ({
   const ctx = useContext(NavContext)
   const { scrollDown } = ctx!
   const [atTop, setAtTop] = useState(false)
+  const [items, setItems] = useState<{ [link: string]: string }>({})
+  const { locale } = useRouter()
   useEffect(() => {
     const adjust = () => {
       if (!navRef.current) return
@@ -23,10 +28,27 @@ const Nav: React.FC<Props & HTMLProps<HTMLElement>> = ({
     }
     adjust()
     document.addEventListener("scroll", adjust, true)
+
+    const getTitles = async () => {
+      const items = await getNavTitles(locale ?? "en") as {[link: string]: string}
+      setItems(items ?? {})
+    }
+    getTitles()
+
     return () => {
       document.removeEventListener("scroll", adjust, true)
     }
   }, [])
+  useEffect(() => {
+    const getTitles = async () => {
+      const items = await getNavTitles(locale ?? "en") as {[link: string]: string}
+      setItems(items ?? {})
+    }
+    getTitles()
+    return () => {
+      
+    }
+  }, [locale])
   return (
     <nav
       ref={navRef}
@@ -36,16 +58,16 @@ const Nav: React.FC<Props & HTMLProps<HTMLElement>> = ({
       {...props}
     >
       <ul className={styles.nav__links}>
-        {navItems &&
-          navItems.map(({ item }, i) => {
-            const includes = item.includes(
+        {Object.keys(items).length > 0 &&
+          Object.entries(items).map(([key, val], i) => {
+            const includes = key.includes(
               String(selectedItem).replace(/_/g, " ")
             )
             return (
-              <li className={styles.nav__li} key={`nav-link-${i}`}>
-                <Link href={`/nav/${item.replace(/ /g, "_")}`}>
+              <li className={styles.nav__li} key={uuid()}>
+                <Link href={`/nav/${key.replace(/ /g, "_")}`}>
                   <a className={styles.nav__link} data-selected={includes}>
-                    {item}
+                    {val}
                   </a>
                 </Link>
               </li>
