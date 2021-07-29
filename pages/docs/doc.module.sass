@@ -3,8 +3,16 @@
 .new
   background: #2B2E2F
   min-height: 100vh
-
   font-size: 1rem
+  position: relative
+  &::before
+    content: ""
+    position: absolute
+    width: 100%
+    bottom: 99%
+    height: 400px
+    background: #2B2E2F
+
   @media screen and ( max-width: 1440px )
     font-size: 0.8rem
 

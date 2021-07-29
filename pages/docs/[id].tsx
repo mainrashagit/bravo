@@ -42,7 +42,6 @@ export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
     },
   }]
   const paths = loc.map(locale => news.map(item => ({ ...item, locale }))).flat(1)
-  console.log(paths)
   return { paths, fallback: false }
 }
 

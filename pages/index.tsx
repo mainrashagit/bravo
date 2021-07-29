@@ -69,7 +69,7 @@ export default function Home({}: Props) {
           taglinetaglinetaglinetagline
         </div>
       </div>
-      <Nav />
+      <Nav style={{position: "sticky"}} />
       <div className={styles.list}>
         {allCats.map((cat, i) => {
           return (

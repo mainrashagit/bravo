@@ -13,6 +13,17 @@
     background: rgba(28, 28, 28, 0.8)
     border: 1px solid #1c1c1c
 
+    &__heading,
+    &__subheading,
+    &__doc
+        transition: opacity 0.2s
+
+    &:hover
+        .square__heading,
+        .square__subheading,
+        .square__doc
+            opacity: 0.4
+
     @media screen and ( max-width: 769px )
         height: 30em
 
@@ -44,3 +55,7 @@
         &Img
             height: 2.6875em
             width: 2.1875em
+
+.link
+    &:hover
+        opacity: 1

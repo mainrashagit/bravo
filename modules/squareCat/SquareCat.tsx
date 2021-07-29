@@ -13,7 +13,7 @@ interface Props {
 const SquareCat: React.FC<Props> = ({ heading, subheading, img, doc, link }) => {
   return (
     <Link href={link}>
-      <a>
+      <a className={styles.link}>
         <div className={styles.square}>
           <div style={{ pointerEvents: "none" }} className={styles.square__img}>
             <Image layout={"fill"} src={img} alt={heading} />
