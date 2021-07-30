@@ -29,12 +29,6 @@ const Nav: React.FC<Props & HTMLProps<HTMLElement>> = ({
     adjust()
     document.addEventListener("scroll", adjust, true)
 
-    const getTitles = async () => {
-      const items = await getNavTitles(locale ?? "en") as {[link: string]: string}
-      setItems(items ?? {})
-    }
-    getTitles()
-
     return () => {
       document.removeEventListener("scroll", adjust, true)
     }

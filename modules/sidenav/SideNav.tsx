@@ -4,14 +4,18 @@ import Link from "next/link"
 import Presentation from "@modules/presentation/Presentation"
 import Image from "next/image"
 import { useRouter } from 'next/router'
+import { getSideNavContent } from "@/lib/api/lang"
 
 interface Props {
   scrollDown: boolean
+  content: any
 }
 
-const SideNav: React.FC<Props> = ({ scrollDown }) => {
+const SideNav: React.FC<Props> = ({ scrollDown, content }) => {
   const [pres, setPres] = useState(false)
   const [burger, setBurger] = useState(false)
+  const [navItems, setNavItems] = useState<{[link: string]: string}>({})
+  const [presText, setPresText] = useState<string[]>([])
   const onPresentationClick = () => {
     setPres(true)
   }
@@ -29,6 +33,13 @@ const SideNav: React.FC<Props> = ({ scrollDown }) => {
     const expireMs = 100 * 24 * 60 * 60 * 1000 // 100 days
     date.setTime(date.getTime() + expireMs)
     document.cookie = `NEXT_LOCALE=${locale};expires=${date.toUTCString()};path=/`
+
+    const getTitles = async () => {
+      const { nav, presentation } = await getSideNavContent(locale ?? "en")
+      setNavItems(nav ?? {})
+      setPresText(presentation)
+    }
+    getTitles()
     return () => {
 
     }
@@ -102,31 +113,31 @@ const SideNav: React.FC<Props> = ({ scrollDown }) => {
           <ul className={styles.nav__links}>
             <li className={styles.nav__link}>
               <Link href="/about_us">
-                <a onClick={offBurger}>About Us</a>
+                <a onClick={offBurger}>{navItems["about"]}</a>
               </Link>
             </li>
             <li className={styles.nav__link}>
-              <a onClick={onPresentationClick}>Presentation</a>
+              <a onClick={onPresentationClick}>{navItems["presentation"]}</a>
             </li>
             <li className={styles.nav__link}>
               <Link href="/contact_us">
-                <a onClick={offBurger}>Contact Us</a>
+                <a onClick={offBurger}>{navItems["contact"]}</a>
               </Link>
             </li>
             <li className={styles.nav__link}>
               <Link href="/work_with_us">
-                <a onClick={offBurger}>Work with Us</a>
+                <a onClick={offBurger}>{navItems["work"]}</a>
               </Link>
             </li>
             <li className={styles.nav__link}>
               <Link href="/news">
-                <a onClick={offBurger}>News</a>
+                <a onClick={offBurger}>{navItems["news"]}</a>
               </Link>
             </li>
           </ul>
           <div className={styles.nav__bottom}>
             <ul className={styles.nav__misc}>
-              <li className={styles.nav__fav}>Favorite/Important</li>
+              <li className={styles.nav__fav}>{navItems["fav"]}</li>
               <li className={styles.nav__search}>
                 <label className={styles.nav__searchInputLabel}>
                   <div className={styles.nav__searchInputPlaceholder}>
@@ -139,12 +150,12 @@ const SideNav: React.FC<Props> = ({ scrollDown }) => {
                         alt="magnifying glass"
                       />
                     </div>
-                    Search
+                    {navItems["search"]}
                   </div>
                   <input
                     className={styles.nav__searchInput}
                     type="text"
-                    placeholder="Search..."
+                    placeholder={`${navItems["search"]}...`}
                   />
                 </label>
               </li>

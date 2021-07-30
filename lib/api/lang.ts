@@ -60,7 +60,7 @@ export async function getNavTitles(locale?: string) {
 
   if (!locale) return navTitles
 
-  const content: {[link: string]: string} = Object.fromEntries(Object.entries(navTitles).map(([key, val] ) => [key, val[locale]]))
+  const content: { [link: string]: string } = Object.fromEntries(Object.entries(navTitles).map(([key, val]) => [key, val[locale]]))
 
   return content
 }
@@ -96,8 +96,13 @@ export async function getNavItemContent(item: string, locale: string) {
 }
 
 
-export async function getSubNavContent() {
-  const allContent = {
+export async function getSideNavContent(locale: string) {
+  const allContent: {
+    nav: {
+      [item: string]: ILocaleText
+    },
+    presentation: ILocaleText[]
+  } = {
     "nav": {
       "about": {
         en: "About Us",
@@ -154,7 +159,10 @@ export async function getSubNavContent() {
     ]
   }
 
-  return allContent
+  const nav: { [link: string]: string } = Object.fromEntries(Object.entries(allContent.nav).map(([key, val]) => [key, val[locale]]))
+  const presentation: string[] = allContent.presentation.map(item => item[locale])
+
+  return { nav, presentation }
 }
 
 interface IIndexPage {
@@ -235,7 +243,7 @@ export async function getAboutUs(locale: string) {
       }
     ]
   }
-  const result = {...content, about: content.about[locale], members: ""}
+  const result = { ...content, about: content.about[locale], members: "" }
   return result
 }
 
