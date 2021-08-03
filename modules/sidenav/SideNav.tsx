@@ -3,21 +3,25 @@ import { useState, MouseEvent, useEffect } from "react"
 import Link from "next/link"
 import Presentation from "@modules/presentation/Presentation"
 import Image from "next/image"
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router"
 import { getSideNavContent } from "@/lib/api/lang"
+import ContactUs from "@modules/contactUs"
 
 interface Props {
   scrollDown: boolean
-  content: any
 }
 
-const SideNav: React.FC<Props> = ({ scrollDown, content }) => {
+const SideNav: React.FC<Props> = ({ scrollDown }) => {
   const [pres, setPres] = useState(false)
   const [burger, setBurger] = useState(false)
-  const [navItems, setNavItems] = useState<{[link: string]: string}>({})
+  const [navItems, setNavItems] = useState<{ [link: string]: string }>({})
   const [presText, setPresText] = useState<string[]>([])
+  const [contact, setContact] = useState(false)
   const onPresentationClick = () => {
     setPres(true)
+  }
+  const onContactClick = () => {
+    setContact(true)
   }
   const toggleBurger = () => {
     setBurger(!burger)
@@ -40,9 +44,7 @@ const SideNav: React.FC<Props> = ({ scrollDown, content }) => {
       setPresText(presentation)
     }
     getTitles()
-    return () => {
-
-    }
+    return () => {}
   }, [locale])
   return (
     <>
@@ -51,60 +53,27 @@ const SideNav: React.FC<Props> = ({ scrollDown, content }) => {
           <Link href="/">
             <a className={styles.nav__logo} onClick={offBurger}>
               <div className={styles.nav__logoMain}>
-                <Image
-                  layout={"responsive"}
-                  width={45}
-                  height={44}
-                  src={"/logo.svg"}
-                  alt="logo"
-                />
+                <Image layout={"responsive"} width={45} height={44} src={"/logo.svg"} alt="logo" />
               </div>
               <div className={styles.nav__logoBravo}>
-                <Image
-                  layout={"responsive"}
-                  width={74}
-                  height={24}
-                  src={"/bravo.svg"}
-                  alt="bravo"
-                />
+                <Image layout={"responsive"} width={74} height={24} src={"/bravo.svg"} alt="bravo" />
               </div>
               <div className={styles.nav__logoConsulting}>
-                <Image
-                  layout={"responsive"}
-                  width={73}
-                  height={15}
-                  src={"/consulting.svg"}
-                  alt="consulting"
-                />
+                <Image layout={"responsive"} width={73} height={15} src={"/consulting.svg"} alt="consulting" />
               </div>
             </a>
           </Link>
           <div className={styles.nav__right}>
             <div className={styles.nav__heart}>
               <div className={styles.nav__heartImg}>
-                <Image
-                  layout={"responsive"}
-                  width={24}
-                  height={20}
-                  src={"/heart.svg"}
-                  alt="favorite"
-                />
+                <Image layout={"responsive"} width={24} height={20} src={"/heart.svg"} alt="favorite" />
               </div>
             </div>
             <div className={styles.nav__burger} onClick={toggleBurger}>
               <div className={styles.nav__burgerImg}>
-                <div
-                  className={styles.nav__burgerImgLine}
-                  data-active={burger}
-                ></div>
-                <div
-                  className={styles.nav__burgerImgLine}
-                  data-active={burger}
-                ></div>
-                <div
-                  className={styles.nav__burgerImgLine}
-                  data-active={burger}
-                ></div>
+                <div className={styles.nav__burgerImgLine} data-active={burger}></div>
+                <div className={styles.nav__burgerImgLine} data-active={burger}></div>
+                <div className={styles.nav__burgerImgLine} data-active={burger}></div>
               </div>
             </div>
           </div>
@@ -120,9 +89,7 @@ const SideNav: React.FC<Props> = ({ scrollDown, content }) => {
               <a onClick={onPresentationClick}>{navItems["presentation"]}</a>
             </li>
             <li className={styles.nav__link}>
-              <Link href="/contact_us">
-                <a onClick={offBurger}>{navItems["contact"]}</a>
-              </Link>
+              <a onClick={onContactClick}>{navItems["contact"]}</a>
             </li>
             <li className={styles.nav__link}>
               <Link href="/work_with_us">
@@ -142,21 +109,11 @@ const SideNav: React.FC<Props> = ({ scrollDown, content }) => {
                 <label className={styles.nav__searchInputLabel}>
                   <div className={styles.nav__searchInputPlaceholder}>
                     <div className={styles.nav__searchGlass}>
-                      <Image
-                        layout={"responsive"}
-                        width={12}
-                        height={12}
-                        src={"/glass.svg"}
-                        alt="magnifying glass"
-                      />
+                      <Image layout={"responsive"} width={12} height={12} src={"/glass.svg"} alt="magnifying glass" />
                     </div>
                     {navItems["search"]}
                   </div>
-                  <input
-                    className={styles.nav__searchInput}
-                    type="text"
-                    placeholder={`${navItems["search"]}...`}
-                  />
+                  <input className={styles.nav__searchInput} type="text" placeholder={`${navItems["search"]}...`} />
                 </label>
               </li>
             </ul>
@@ -164,39 +121,21 @@ const SideNav: React.FC<Props> = ({ scrollDown, content }) => {
               <li className={styles.nav__mediaItem}>
                 <a href="#" className={styles.nav__mediaLink}>
                   <div className={styles.nav__mediaImg}>
-                    <Image
-                      layout={"responsive"}
-                      width={20}
-                      height={20}
-                      src={"/ig.svg"}
-                      alt="instagram"
-                    />
+                    <Image layout={"responsive"} width={20} height={20} src={"/ig.svg"} alt="instagram" />
                   </div>
                 </a>
               </li>
               <li className={styles.nav__mediaItem}>
                 <a href="#" className={styles.nav__mediaLink}>
                   <div className={styles.nav__mediaImg}>
-                    <Image
-                      layout={"responsive"}
-                      width={20}
-                      height={20}
-                      src={"/fb.svg"}
-                      alt="instagram"
-                    />
+                    <Image layout={"responsive"} width={20} height={20} src={"/fb.svg"} alt="instagram" />
                   </div>
                 </a>
               </li>
               <li className={styles.nav__mediaItem}>
                 <a href="#" className={styles.nav__mediaLink}>
                   <div className={styles.nav__mediaImg}>
-                    <Image
-                      layout={"responsive"}
-                      width={20}
-                      height={20}
-                      src={"/pin.svg"}
-                      alt="instagram"
-                    />
+                    <Image layout={"responsive"} width={20} height={20} src={"/pin.svg"} alt="instagram" />
                   </div>
                 </a>
               </li>
@@ -204,25 +143,19 @@ const SideNav: React.FC<Props> = ({ scrollDown, content }) => {
             <ul className={styles.nav__lang}>
               <li data-selected={locale === "ru"}>
                 <Link href={asPath} locale="ru">
-                  <a>
-                    ru
-                  </a>
+                  <a>ru</a>
                 </Link>
               </li>
               <span className={styles.nav__langPipe}></span>
               <li data-selected={locale === "en"}>
                 <Link href={asPath} locale="en">
-                  <a>
-                    en
-                  </a>
+                  <a>en</a>
                 </Link>
               </li>
               <span className={styles.nav__langPipe}></span>
               <li data-selected={locale === "de"}>
                 <Link href={asPath} locale="de">
-                  <a>
-                    de
-                  </a>
+                  <a>de</a>
                 </Link>
               </li>
             </ul>
@@ -234,6 +167,7 @@ const SideNav: React.FC<Props> = ({ scrollDown, content }) => {
         </div>
       </aside>
       {pres && <Presentation setPres={setPres} />}
+      {contact && <ContactUs setContact={setContact} />}
     </>
   )
 }
