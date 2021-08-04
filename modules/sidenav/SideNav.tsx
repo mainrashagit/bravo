@@ -101,7 +101,7 @@ const SideNav: React.FC<Props> = ({ scrollDown }) => {
                 <label className={styles.nav__searchInputLabel}>
                   <div className={styles.nav__searchInputPlaceholder}>
                     <div className={styles.nav__searchGlass}>
-                      <Image layout={"responsive"} width={12} height={12} src={"/glass.svg"} alt="magnifying glass" />
+                      <img src={content?.searchIcon?.sourceUrl} alt={content?.searchIcon?.altText} />
                     </div>
                     {content?.search}
                   </div>

@@ -78,7 +78,15 @@ interface ISideNavContent {
         presentationText: ILocaleText
         presentationTitle: ILocaleText
       }
-      search: ILocaleText
+      search: {
+        en: string
+        ru: string
+        de: string
+        searchIcon: {
+          altText: string
+          sourceUrl: string
+        }
+      }
       workWithUs: ILocaleText
     }
   }
@@ -122,11 +130,16 @@ export type SideNavContent = {
     presentationTitle: string
   }
   search: string
+  searchIcon: {
+    altText: string
+    sourceUrl: string
+  }
   workWithUs: string
 }
 
 export async function getSideNavContent(locale: string = defaultLocale): Promise<SideNavContent> {
-  const data = (await fetchAPI(`query VerticalNavigationBar {
+  const data = (await fetchAPI(`
+  query VerticalNavigationBar {
     post(id: "38", idType: DATABASE_ID) {
       verticalNavigationBar {
         copyright
@@ -209,6 +222,10 @@ export async function getSideNavContent(locale: string = defaultLocale): Promise
           ru
           en
           de
+          searchIcon {
+            altText
+            sourceUrl
+          }
         }
         workWithUs {
           ru
@@ -231,6 +248,7 @@ export async function getSideNavContent(locale: string = defaultLocale): Promise
     logo: res.logo,
     media: res.media,
     news: res.news[locale],
+    // @ts-ignore
     search: res.search[locale],
     workWithUs: res.workWithUs[locale],
     contactUs: {
@@ -249,6 +267,7 @@ export async function getSideNavContent(locale: string = defaultLocale): Promise
       presentationText: res.presentation.presentationText[loc],
       presentationTitle: res.presentation.presentationTitle[loc],
     },
+    searchIcon: res.search.searchIcon
   }
 }
 
@@ -827,7 +846,7 @@ export async function getNavContentBySlug(id: string, locale: string = defaultLo
     }
   }
   `)) as INavContent
-  const res = data.post.horizontalNavigationBar.items.map((item) => (item.item[locale]))
+  const res = data.post.horizontalNavigationBar.items.map((item) => item.item[locale])
   return res
 }
 
@@ -859,4 +878,47 @@ export async function getNavItemContent(item: string, locale: string) {
   }
 
   return allNavContent[item][locale]
+}
+
+interface IBg {
+  posts: {
+    nodes: {
+      backgroundImage: {
+        image: { srcSet: string; sourceUrl: string; altText: string }
+        linkedPageTitle: string | null
+      }
+    }[]
+  }
+}
+
+export type Bg = {
+  srcSet: string
+  sourceUrl: string
+  altText: string
+}
+
+export async function getBgByPageSlug(id: string): Promise<Bg> {
+  const data = (await fetchAPI(`
+  query BackgroundImages {
+    posts(where: {categoryName: "background-images"}) {
+      nodes {
+        backgroundImage {
+          image {
+            srcSet
+            sourceUrl
+            altText
+          }
+          linkedPageTitle
+        }
+      }
+    }
+  }
+  `)) as IBg
+  const main = data.posts.nodes.find((node) => node.backgroundImage.linkedPageTitle === null)?.backgroundImage.image ?? {
+    srcSet: "",
+    sourceUrl: "",
+    altText: ""
+  }
+
+  return main
 }

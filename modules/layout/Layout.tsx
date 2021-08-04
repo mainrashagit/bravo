@@ -1,15 +1,19 @@
 import SideNav from "@modules/sidenav/SideNav"
-import { useEffect, useRef, useContext } from "react"
+import { useEffect, useRef, useContext, useState } from "react"
 import styles from "./layout.module.sass"
 import Bg1 from "@img/bg1.png"
 import Image from "next/image"
 import { NavContext } from "@/context/NavContext"
 import SimpleBar from "simplebar-react"
 import "simplebar/src/simplebar.css"
+import { getBgByPageSlug } from "@/lib/api/lang"
 
-interface Props {}
+interface Props {
+
+}
 
 const Layout: React.FC<Props> = ({ children }) => {
+  const [bg, setBg] = useState("")
   const ctx = useContext(NavContext)
   const { setScrollDown, scrollDown } = ctx!
   const scrollDiff = useRef(0)
@@ -48,6 +52,12 @@ const Layout: React.FC<Props> = ({ children }) => {
     }
     resizeHeight()
     window.addEventListener("resize", resizeHeight)
+
+    const getBg = async () => {
+      const bg = await getBgByPageSlug("")
+      setBg(bg.sourceUrl)
+    }
+    getBg()
     return () => {
       document.removeEventListener("scroll", scroll, true)
       document.removeEventListener("click", unScroll, true)
@@ -56,7 +66,7 @@ const Layout: React.FC<Props> = ({ children }) => {
   }, [])
   return (
     <div className={styles.page}>
-      <Image layout={"fill"} className={styles.bg} src={Bg1} alt="background" />
+      {bg && <img className={styles.bg} src={bg} alt="background" />}
       <div className={styles.border}></div>
       <SideNav scrollDown={scrollDown} />
       <SimpleBar>{children}</SimpleBar>
