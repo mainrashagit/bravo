@@ -11,6 +11,31 @@
     cursor: pointer
     @extend %flex-center
 
+.cross
+    position: fixed
+    right: 2vw
+    top: 5vh
+    width: 3em
+    height: 3em
+    transition: opacity 0.2s
+
+    &:hover
+        opacity: 0.4
+
+    &::before,
+    &::after
+        position: absolute
+        top: 0
+        left: 0
+        content: ""
+        height: 100%
+        width: 2px
+        background: rgba(255,255,255,0.7)
+    &::before
+        transform: rotate(45deg)
+    &::after
+        transform: rotate(-45deg)
+
 .form
     padding: 0.9375em
     border-radius: 15px
@@ -67,10 +92,8 @@
 
     &__media
         display: flex
-        gap: 1.25em
+        & > * + *
+            margin-left: 1.25em
 
     &__link
         width: 1.5625em
-
-    &__envelope
-        width: 1.875em

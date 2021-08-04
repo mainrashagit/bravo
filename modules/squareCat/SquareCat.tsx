@@ -5,7 +5,7 @@ import Link from "next/link"
 interface Props {
   heading: string
   subheading?: string
-  img: string
+  img?: string
   doc?: boolean
   link: string
 }
@@ -15,9 +15,7 @@ const SquareCat: React.FC<Props> = ({ heading, subheading, img, doc, link }) => 
     <Link href={link}>
       <a className={styles.link}>
         <div className={styles.square}>
-          <div style={{ pointerEvents: "none" }} className={styles.square__img}>
-            <Image layout={"fill"} src={img} alt={heading} />
-          </div>
+            <img className={styles.square__img} src={img} alt={heading} />
           <h3 className={styles.square__heading}>{heading}</h3>
           {subheading && (
             <div className={styles.square__subheading}>{subheading}</div>

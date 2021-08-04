@@ -3,20 +3,28 @@ import styles from "./subnav.module.sass"
 import { ParsedUrlQuery } from "querystring"
 import { GetStaticPaths, GetStaticProps } from "next"
 import { v4 as uuid } from "uuid"
-import { getNavItemContent, getNavTitles } from "../../lib/api/lang"
+import { getNavContentBySlug, getNavPaths, NavContent } from "../../lib/api/lang"
 
 interface Props {
+  content: NavContent
   sub: string
-  item: string
 }
 
-const SubNav: React.FC<Props> = ({ sub, item }) => {
+const SubNav: React.FC<Props> = ({ content, sub }) => {
   return (
     <>
       <Nav selectedItem={sub} />
       <div className={styles.subnav}>
-        <div className={styles.subnav__itemMain}>{item}</div>
+        <div className={styles.subnav__itemMain}>{content[0]}</div>
         <ul className={styles.subnav__items}>
+          {content.map((item, i) => {
+            if (i === 0) return
+            return (
+              <li className={styles.subnav__item} key={uuid()}>
+                {item}
+              </li>
+            )
+          })}
 
           <li className={styles.subnav__item} key={uuid()}>
             Item1
@@ -42,13 +50,9 @@ interface IParams extends ParsedUrlQuery {
   sub: string
 }
 
-export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
-  const loc = locales ?? ["en"]
-  const items = await getNavTitles()
-  const paths = loc.map(locale => Object.entries(items).map(([key, val]) => ({
-    params: { sub: key.replace(/ /g, "_") },
-    locale
-  }))).flat(1)
+export const getStaticPaths: GetStaticPaths = async ({ locales, defaultLocale }) => {
+  const loc = locales ?? ([defaultLocale] as string[])
+  const paths = await getNavPaths(loc)
   return { paths, fallback: false }
 }
 
@@ -56,6 +60,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const { sub } = context.params as IParams
   const { locale } = context
   const loc = typeof locale === "string" ? locale : "en"
-  const item = await getNavItemContent(sub, loc)
-  return { props: { item, sub } }
+  const content = await getNavContentBySlug(sub, loc)
+  return { props: { content, sub } }
 }

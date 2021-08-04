@@ -6,18 +6,15 @@ import { v4 as uuid } from "uuid"
 import { useEffect, useRef, useState } from "react"
 import SimpleBar from "simplebar-react"
 import "simplebar/src/simplebar.css"
-import { getAboutUs } from "../../lib/api/lang"
+import { AboutPage, getAboutPage } from "@/lib/api/lang"
+import { GetStaticProps } from "next"
 
 interface Props {
-  content: {
-    about: string;
-    members: string;
-    title: string
-  }
+  content: AboutPage
 }
 
-const AboutUs: React.FC<Props> = ({ content: { about } }) => {
-  const team = [
+const AboutUs: React.FC<Props> = ({ content: { text, team, title } }) => {
+  const teamList = [
     {
       name: "Darlene Robertson",
       post: "Business process analyst",
@@ -60,9 +57,9 @@ const AboutUs: React.FC<Props> = ({ content: { about } }) => {
     },
   ]
 
-  const teamItems = team.map(({ name, post }, i) => (
+  const teamItems = team.map(({ name, image, position }, i) => (
     <li className={styles.team__member} key={uuid()}>
-      <Member name={name} post={post} img={`member${i % 2 ? 2 : 1}.png`} />
+      <Member name={name} post={position} img={image} />
     </li>
   ))
   const [isTop, setIsTop] = useState(true)
@@ -129,9 +126,9 @@ const AboutUs: React.FC<Props> = ({ content: { about } }) => {
             </div>
           </div>
           <div className={styles.about__right} data-hidden={!isTop}>
-            <div className={styles.about__title}>Bravo Consulting</div>
+            <div className={styles.about__title}>{title}</div>
             <p>
-              {about}
+              {text}
             </p>
           </div>
         </div>
@@ -158,11 +155,12 @@ const AboutUs: React.FC<Props> = ({ content: { about } }) => {
 
 export default AboutUs
 
-export async function getStaticProps({ locale }: { locale: string }) {
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { locale, defaultLocale } = context
+  const loc = locale ?? (defaultLocale as string)
 
-  const content = await getAboutUs(locale)
-  // By returning { props: posts }, the Blog component
-  // will receive `posts` as a prop at build time
+  const content = await getAboutPage(loc)
+
   return {
     props: {
       content,

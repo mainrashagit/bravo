@@ -2,12 +2,16 @@ import styles from "./workwithus.module.sass"
 import Post from "@modules/post/Post"
 import Nav from "@modules/nav/Nav"
 import { v4 as uuid } from "uuid"
+import { getPositions, Positions } from "@/lib/api/lang"
+import { GetStaticProps } from "next"
 
 
-interface Props {}
+interface Props {
+  positions: Positions
+}
 
-const WorkWithUs: React.FC<Props> = ({}) => {
-  const positions = [
+const WorkWithUs: React.FC<Props> = ({positions}) => {
+  const posts = [
     {
       location: "Moscow",
       title: "Consultant / Deputy Chief Accountant (Outsourcing)",
@@ -109,9 +113,9 @@ const WorkWithUs: React.FC<Props> = ({}) => {
       title: "Audit Manager/Assistant Manager",
     },
   ]
-  const posElements = positions.map(({ title, location }, i) => (
+  const posElements = positions?.map(({ title, loc, resBtn }, i) => (
     <li className={styles.posts__post} key={uuid()}>
-      <Post title={title} location={location} />
+      <Post title={title} location={loc} resBtn={resBtn} />
     </li>
   ))
   return (
@@ -123,3 +127,13 @@ const WorkWithUs: React.FC<Props> = ({}) => {
 }
 
 export default WorkWithUs
+
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { locale, defaultLocale } = context
+  const loc = locale ?? (defaultLocale as string)
+
+  const positions = await getPositions(loc)
+
+  return { props: { positions } }
+}

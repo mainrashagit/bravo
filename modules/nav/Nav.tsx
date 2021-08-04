@@ -3,7 +3,7 @@ import { HTMLProps, useContext, useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import styles from "./nav.module.sass"
 import { v4 as uuid } from "uuid"
-import { getNavTitles } from "../../lib/api/lang"
+import { getNavLinks, NavLinks } from "../../lib/api/lang"
 import { useRouter } from "next/router"
 
 interface Props {
@@ -18,7 +18,7 @@ const Nav: React.FC<Props & HTMLProps<HTMLElement>> = ({
   const ctx = useContext(NavContext)
   const { scrollDown } = ctx!
   const [atTop, setAtTop] = useState(false)
-  const [items, setItems] = useState<{ [link: string]: string }>({})
+  const [items, setItems] = useState<NavLinks>()
   const { locale } = useRouter()
   useEffect(() => {
     const adjust = () => {
@@ -35,8 +35,8 @@ const Nav: React.FC<Props & HTMLProps<HTMLElement>> = ({
   }, [])
   useEffect(() => {
     const getTitles = async () => {
-      const items = await getNavTitles(locale ?? "en") as {[link: string]: string}
-      setItems(items ?? {})
+      const items = await getNavLinks(locale)
+      setItems(items)
     }
     getTitles()
     return () => {
@@ -52,16 +52,12 @@ const Nav: React.FC<Props & HTMLProps<HTMLElement>> = ({
       {...props}
     >
       <ul className={styles.nav__links}>
-        {Object.keys(items).length > 0 &&
-          Object.entries(items).map(([key, val], i) => {
-            const includes = key.includes(
-              String(selectedItem).replace(/_/g, " ")
-            )
+        {items && items.map((item, i) => {
             return (
               <li className={styles.nav__li} key={uuid()}>
-                <Link href={`/nav/${key.replace(/ /g, "_")}`}>
-                  <a className={styles.nav__link} data-selected={includes}>
-                    {val}
+                <Link href={`/nav/${item.link}`}>
+                  <a className={styles.nav__link} data-selected={selectedItem === item.link}>
+                    {item.title}
                   </a>
                 </Link>
               </li>

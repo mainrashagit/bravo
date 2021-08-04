@@ -8,6 +8,31 @@
     cursor: pointer
     background: rgba(0,0,0,0.7)
 
+.cross
+    position: fixed
+    right: 2vw
+    top: 5vh
+    width: 3em
+    height: 3em
+    transition: opacity 0.2s
+
+    &:hover
+        opacity: 0.4
+
+    &::before,
+    &::after
+        position: absolute
+        top: 0
+        left: 0
+        content: ""
+        height: 100%
+        width: 2px
+        background: rgba(255,255,255,0.7)
+    &::before
+        transform: rotate(45deg)
+    &::after
+        transform: rotate(-45deg)
+
 .pres
     @extend %flex-center
     flex-direction: column

@@ -1,11 +1,14 @@
 import styles from "./contactus.module.sass"
 import Image from "next/image"
+import { SideNavContent } from "@/lib/api/lang"
+import {v4 as uuid} from "uuid"
 
 interface Props {
   setContact: React.Dispatch<React.SetStateAction<boolean>>
+  content?: SideNavContent["contactUs"]
 }
 
-const ContactUs: React.FC<Props> = ({ setContact }) => {
+const ContactUs: React.FC<Props> = ({ setContact, content }) => {
   const close = () => {
     setContact(false)
   }
@@ -15,36 +18,24 @@ const ContactUs: React.FC<Props> = ({ setContact }) => {
   return (
     <>
       <div className={styles.wrapper} onClick={close}>
+        <div className={styles.cross}></div>
         <form className={styles.form} onClick={stopProp}>
           <fieldset className={styles.form__field}>
-            <legend className={styles.form__title}>Contact Us</legend>
+            <legend className={styles.form__title}>{content?.title}</legend>
             <div className={styles.form__inputs}>
-              <input type="text" className={styles.form__input} placeholder={"Name"} />
-              <input type="text" className={styles.form__input} placeholder={"Phone"} />
-              <input type="text" className={styles.form__input} placeholder={"Topic or Appeal"} />
-              <input type="submit" className={styles.form__submit} value={"Send"} />
+              {content?.contactForm.formFields.map((field) => (
+                <input type="text" className={styles.form__input} placeholder={field} />
+              ))}
+              <input type="submit" className={styles.form__submit} value={content?.contactForm.submitButton} />
             </div>
             <ul className={styles.form__media}>
-              <li className={styles.form__link}>
-                <a href="#">
-                  <Image layout={"responsive"} width={20} height={20} src={"/ig.svg"} alt="instagram" />
-                </a>
-              </li>
-              <li className={styles.form__link}>
-                <a href="#">
-                  <Image layout={"responsive"} width={20} height={20} src={"/fb.svg"} alt="facebook" />
-                </a>
-              </li>
-              <li className={styles.form__link}>
-                <a href="#">
-                  <Image layout={"responsive"} width={20} height={20} src={"/pin.svg"} alt="pinterest" />
-                </a>
-              </li>
-              <li className={styles.form__envelope}>
-                <a href="#">
-                  <Image layout={"responsive"} width={30} height={25} src={"/envelope.svg"} alt="email" />
-                </a>
-              </li>
+              {content?.contactForm.media.map((item) => (
+                <li className={styles.form__link} key={uuid()}>
+                  <a href={item?.link}>
+                    <img src={item?.image?.sourceUrl} alt={item?.image?.altText}/>
+                  </a>
+                </li>
+              ))}
             </ul>
           </fieldset>
         </form>

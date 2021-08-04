@@ -5,17 +5,21 @@ import styles from "./member.module.sass"
 interface Props {
   name: string
   post: string
-  img: string
+  img: {
+    altText: string
+    sourceUrl: string
+    srcSet: string
+  }
 }
 
 const Member: React.FC<Props> = ({ name, post, img }) => {
   return (
     <div className={styles.member}>
-      <div style={{ width: "100%", height: "24em" }}>
-        <Image
-          layout={"fill"}
-          className={styles.member__img}
-          src={`/img/${img}`}
+      <div style={{ width: "100%", height: "24em" }} className={styles.member__img}>
+        <img
+          className={styles.member__imgImg}
+          src={img.sourceUrl}
+          srcSet={img.srcSet}
           alt={name}
         />
       </div>

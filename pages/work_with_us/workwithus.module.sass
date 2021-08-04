@@ -1,13 +1,20 @@
 @use "@/styles/helpers" as *
 
 .posts
-    padding: 90px 0
+    padding: 3.75em 0
     width: 80%
     margin: auto
     display: grid
     grid-template-columns: repeat(2, 1fr)
     gap: 1.25rem 0.9375rem
     height: fit-content
+    font-size: 1rem
+
+    @media screen and ( max-width: 1440px )
+        font-size: 0.85rem
+
+    @media screen and ( max-width: 768px )
+        font-size: 0.5rem
 
     @media screen and ( max-width: 769px )
         grid-template-columns: 1fr

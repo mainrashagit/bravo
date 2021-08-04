@@ -4,86 +4,39 @@ import styles from "./index.module.sass"
 import SquareCat from "@modules/squareCat/SquareCat"
 import Image from "next/image"
 import { v4 as uuid } from "uuid"
+import { GetStaticProps } from "next"
+import { DocPageLinks, getDocPageLinks, getIndexPageContent, IndexPageContent } from "@/lib/api/lang"
 
-interface Cat {
-  h: string
-  subh?: string
-  doc?: boolean
+interface Props {
+  docPages: DocPageLinks
+  content: IndexPageContent
 }
 
-interface Props {}
-
-export default function Home({}: Props) {
-  const cats: Cat[] = [
-    {
-      h: "Operating Agreement (LLC)",
-      doc: true,
-    },
-    {
-      h: "Operating Agreement (LLC)",
-      subh: "IT risk management",
-    },
-    {
-      h: "Corporate taxes advisory: Profit Tax, VAT, Assets tax, Social Contributions",
-      subh: "preparation and submission of a personal income tax return",
-    },
-    {
-      h: "Funding",
-      subh: "Understanding the key reasons in case of financial underperformance",
-    },
-  ]
-  const allCats: Cat[] = [...cats, ...cats, ...cats, ...cats]
+export default function Home({ docPages, content }: Props) {
   return (
     <>
       <div className={styles.headline}>
         <div className={styles.headline__logo}>
-          <div className={styles.headline__img}>
-            <Image
-              layout={"responsive"}
-              width={45}
-              height={45}
-              src={"/logo.svg"}
-              alt="logo"
-            />
-          </div>
-          <div className={styles.headline__bravo}>
-            <Image
-              layout={"responsive"}
-              width={74}
-              height={24}
-              src={"/bravo.svg"}
-              alt="bravo"
-            />
-          </div>
-          <div className={styles.headline__consulting}>
-            <Image
-              layout={"responsive"}
-              width={73}
-              height={15}
-              src={"/consulting.svg"}
-              alt="consulting"
-            />
-          </div>
+          <img className={styles.headline__logoImg} src={content.logo?.sourceUrl} alt={content.logo?.altText} />
         </div>
-        <div className={styles.headline__tagline}>
-          taglinetaglinetaglinetagline
-        </div>
+        <div className={styles.headline__tagline}>{content.tagline}</div>
       </div>
-      <Nav style={{position: "sticky"}} />
+      <Nav style={{ position: "sticky" }} />
       <div className={styles.list}>
-        {allCats.map((cat, i) => {
-          return (
-            <SquareCat
-              heading={cat.h}
-              subheading={cat.subh}
-              img={"/img/cat1.png"}
-              doc={cat.doc}
-              key={uuid()}
-              link={"/docs/doc"}
-            />
-          )
+        {docPages.map(({ title, link, doc, subtitle, image }, i) => {
+          return <SquareCat heading={title} subheading={subtitle ?? undefined} img={image?.sourceUrl} doc={doc ?? undefined} key={uuid()} link={`/docs/${link}`} />
         })}
       </div>
     </>
   )
+}
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { locale, defaultLocale } = context
+  const loc = locale ?? (defaultLocale as string)
+
+  const docPages = await getDocPageLinks(loc)
+  const content = await getIndexPageContent(loc)
+
+  return { props: { docPages, content } }
 }

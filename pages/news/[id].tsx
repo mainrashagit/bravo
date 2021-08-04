@@ -3,31 +3,31 @@ import styles from "./new.module.sass"
 import { ParsedUrlQuery } from "querystring"
 import { GetStaticPaths, GetStaticProps } from "next"
 import { v4 as uuid } from "uuid"
+import { getNewsPaths, getNewsPostBySlug, NewsPost } from "@/lib/api/lang"
 
 interface Props {
-  id: string
+  content: NewsPost
 }
 
-const NewPage: React.FC<Props> = ({ id }) => {
+const NewPage: React.FC<Props> = ({ content: { title, subsection, text, date } }) => {
   return (
     <>
       <Nav />
       <div className={styles.new}>
         <div className={styles.new__wrapper}>
-
-          <div className={styles.new__title}>Title</div>
+          <div className={styles.new__title}>{title}</div>
           <hr />
-          <div className={styles.new__date}>06 Jun 2021</div>
-          <div className={styles.new__text}>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. A eveniet rem, ipsam debitis, aut eaque laboriosam nam quis quod dignissimos error dolores aperiam excepturi commodi numquam architecto veniam assumenda, rerum deleniti. Labore maxime reiciendis in delectus cumque velit facere! Inventore!</p>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nesciunt est iure accusantium officiis minima aspernatur beatae inventore incidunt explicabo laborum?</p>
+          <div className={styles.new__date}>{date}</div>
+          <div className={styles.new__text} dangerouslySetInnerHTML={{__html: text}}>
           </div>
           <div className={styles.new__stats}>
             <div className={styles.new__com}>
-              <img src={"/comment.svg"} className={styles.new__comImg} /><span className={styles.new__comNum}>1024</span>
+              <img src={"/comment.svg"} className={styles.new__comImg} />
+              <span className={styles.new__comNum}>1024</span>
             </div>
             <div className={styles.new__view}>
-              <img src={"/eye.svg"} className={styles.new__viewImg} /><span className={styles.new__viewNum}>768</span>
+              <img src={"/eye.svg"} className={styles.new__viewImg} />
+              <span className={styles.new__viewNum}>768</span>
             </div>
           </div>
           <hr />
@@ -45,9 +45,7 @@ const NewPage: React.FC<Props> = ({ id }) => {
                 <div className={styles.comment__time}>18:33</div>
                 <div className={styles.comment__date}>21 Aug 2021</div>
               </div>
-              <div className={styles.comment__body}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab reprehenderit, sint praesentium laborum modi quia amet debitis placeat doloremque tenetur.
-              </div>
+              <div className={styles.comment__body}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab reprehenderit, sint praesentium laborum modi quia amet debitis placeat doloremque tenetur.</div>
             </div>
             <div className={styles.comment}>
               <div className={styles.comment__stats}>
@@ -55,9 +53,7 @@ const NewPage: React.FC<Props> = ({ id }) => {
                 <div className={styles.comment__time}>18:33</div>
                 <div className={styles.comment__date}>21 Aug 2021</div>
               </div>
-              <div className={styles.comment__body}>
-                {`Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab reprehenderit, sint praesentium laborum modi quia amet debitis placeat doloremque tenetur. Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat possimus veritatis quia a tenetur quas, obcaecati quaerat nam eos aliquam? Consequatur saepe illum quas, praesentium deleniti harum tempora soluta nulla.`}
-              </div>
+              <div className={styles.comment__body}>{`Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab reprehenderit, sint praesentium laborum modi quia amet debitis placeat doloremque tenetur. Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat possimus veritatis quia a tenetur quas, obcaecati quaerat nam eos aliquam? Consequatur saepe illum quas, praesentium deleniti harum tempora soluta nulla.`}</div>
             </div>
           </div>
         </div>
@@ -72,21 +68,15 @@ interface IParams extends ParsedUrlQuery {
   id: string
 }
 
-export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
-  const loc = locales ?? ["en"]
-  const news = [{
-    params: {
-      id: "new1",
-    },
-  }]
-  const paths = loc.map(locale => news.map(item => ({ ...item, locale }))).flat(1)
+export const getStaticPaths: GetStaticPaths = async ({ locales, defaultLocale }) => {
+  const loc = locales ?? [defaultLocale] as string[]
+  const paths = await getNewsPaths(loc)
   return { paths, fallback: false }
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const { id, locale } = context.params as IParams
-  const loc = typeof locale === "string" ? locale : "en"
-  
+  const content = await getNewsPostBySlug(id)
 
-  return { props: { id } }
+  return { props: { content } }
 }

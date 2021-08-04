@@ -35,19 +35,17 @@
             overflow: hidden
 
     &__logo
-        display: flex
-        flex-direction: column
-        gap: 0.3125em
-        align-items: center
+        width: 4.85em
+        display: block
+        margin: auto
+        position: relative
 
-        &Main
-            width: 2.85em
+        @media screen and ( max-width: 768px )
+            margin: 0
 
-        &Bravo
-            width: 4.6em
-
-        &Consulting
-            width: 4.5em
+        &Img
+            width: 100%
+            object-fit: contain
 
     &__heart
         display: none
@@ -95,6 +93,7 @@
             height: $size
             width: $size
             cursor: pointer
+            object-fit: contain
 
             @media screen and ( min-width: 769px )
                 display: none
@@ -263,6 +262,8 @@
         display: flex
         flex-direction: column
         align-items: center
+        justify-content: center
+        text-align: center
 
         @media screen and ( max-width: 769px )
             display: none
