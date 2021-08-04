@@ -37,16 +37,23 @@
 
     &__logo
         position: relative
-        width: 132px
+        --size: 132px
+        width: var(--size)
+        height: var(--size)
+
+        &Img
+            width: 100%
+            height: 100%
+            @extend %position-fit
 
         @media screen and ( min-width: 768px )
-            width: 185px
+            --size: 185px
 
         @media screen and ( min-width: 990px )
-            width: 250px
+            --size: 250px
 
         @media screen and ( min-width: 1440px )
-            width: 370px
+            --size: 370px
 
     &__right
         width: 100%

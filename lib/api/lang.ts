@@ -679,6 +679,10 @@ interface IAboutPage {
           sourceUrl: string
         }
       }[]
+      logo: {
+        sourceUrl: string
+        altText: string
+      }
     }
   }
 }
@@ -695,6 +699,10 @@ export type AboutPage = {
       sourceUrl: string
     }
   }[]
+  logo: {
+    sourceUrl: string
+    altText: string
+  }
 }
 
 export async function getAboutPage(locale: string = defaultLocale): Promise<AboutPage> {
@@ -729,6 +737,10 @@ export async function getAboutPage(locale: string = defaultLocale): Promise<Abou
           en
           ru
         }
+        logo {
+          sourceUrl
+          altText
+        }
       }
     }
   }
@@ -742,6 +754,7 @@ export async function getAboutPage(locale: string = defaultLocale): Promise<Abou
       position: position[locale],
       image,
     })),
+    logo: data.post.about.logo
   } as AboutPage
   return res
 }

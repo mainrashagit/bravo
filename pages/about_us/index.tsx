@@ -13,7 +13,7 @@ interface Props {
   content: AboutPage
 }
 
-const AboutUs: React.FC<Props> = ({ content: { text, team, title } }) => {
+const AboutUs: React.FC<Props> = ({ content: { text, team, title, logo } }) => {
   const teamList = [
     {
       name: "Darlene Robertson",
@@ -77,13 +77,7 @@ const AboutUs: React.FC<Props> = ({ content: { text, team, title } }) => {
     const content = document.querySelectorAll(".simplebar-content")[1]
     const moeseus = (e: WheelEvent) => {
       if (isWheelDown(e.deltaY) && isTop) setIsTop(false)
-      if (
-        !isWheelDown(e.deltaY) &&
-        !isTop &&
-        team$.current !== null &&
-        content.getBoundingClientRect().top! >= 0
-      )
-        setIsTop(true)
+      if (!isWheelDown(e.deltaY) && !isTop && team$.current !== null && content.getBoundingClientRect().top! >= 0) setIsTop(true)
     }
     document.addEventListener("wheel", moeseus, true)
     return () => {
@@ -105,31 +99,17 @@ const AboutUs: React.FC<Props> = ({ content: { text, team, title } }) => {
   return (
     <>
       <div className={styles.content}>
-        <Nav
-          style={
-            !isSmall
-              ? { position: "absolute", top: "0" }
-              : { position: "sticky" }
-          }
-        />
+        <Nav style={!isSmall ? { position: "absolute", top: "0" } : { position: "sticky" }} />
 
         <div className={styles.about}>
           <div className={styles.about__left} data-hidden={!isTop}>
             <div className={styles.about__logo}>
-              <Image
-                layout={"responsive"}
-                width={45}
-                height={45}
-                src={"/logo.svg"}
-                alt="logo"
-              />
+              <img className={styles.about__logoImg} src={logo.sourceUrl} alt="logo" />
             </div>
           </div>
           <div className={styles.about__right} data-hidden={!isTop}>
             <div className={styles.about__title}>{title}</div>
-            <p>
-              {text}
-            </p>
+            <p>{text}</p>
           </div>
         </div>
 
