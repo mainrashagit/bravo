@@ -13,8 +13,8 @@ const Presentation: React.FC<Props> = ({ setPres }) => {
   }
   return (
     <div className={styles.wrapper} onClick={close}>
-      <div className={styles.cross}></div>
       <div className={styles.pres} onClick={stopProp}>
+        <div className={styles.cross} onClick={close}></div>
         <div className={styles.pres__title}>presentation in pdf format</div>
         <div className={styles.pres__desc}>FILE SIZE OVER 100 MB - CONTINUE DOWNLOADING?</div>
         <a className={styles.pres__download} onClick={close}>

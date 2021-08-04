@@ -1,4 +1,4 @@
-const API_URL = "http://bravo.com.xsph.ru/graphql"
+const API_URL = "https://bravo.mainrasha.com/graphql"
 const defaultLocale = "en"
 
 async function fetchAPI(query: string, { variables }: any = {}) {
@@ -827,7 +827,6 @@ export async function getNavContentBySlug(id: string, locale: string = defaultLo
     }
   }
   `)) as INavContent
-  console.log(data)
   const res = data.post.horizontalNavigationBar.items.map((item) => (item.item[locale]))
   return res
 }

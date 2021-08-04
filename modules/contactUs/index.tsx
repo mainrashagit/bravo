@@ -1,7 +1,7 @@
 import styles from "./contactus.module.sass"
 import Image from "next/image"
 import { SideNavContent } from "@/lib/api/lang"
-import {v4 as uuid} from "uuid"
+import { v4 as uuid } from "uuid"
 
 interface Props {
   setContact: React.Dispatch<React.SetStateAction<boolean>>
@@ -18,8 +18,8 @@ const ContactUs: React.FC<Props> = ({ setContact, content }) => {
   return (
     <>
       <div className={styles.wrapper} onClick={close}>
-        <div className={styles.cross}></div>
         <form className={styles.form} onClick={stopProp}>
+          <div className={styles.cross} onClick={close}></div>
           <fieldset className={styles.form__field}>
             <legend className={styles.form__title}>{content?.title}</legend>
             <div className={styles.form__inputs}>
@@ -32,7 +32,7 @@ const ContactUs: React.FC<Props> = ({ setContact, content }) => {
               {content?.contactForm.media.map((item) => (
                 <li className={styles.form__link} key={uuid()}>
                   <a href={item?.link}>
-                    <img src={item?.image?.sourceUrl} alt={item?.image?.altText}/>
+                    <img src={item?.image?.sourceUrl} alt={item?.image?.altText} />
                   </a>
                 </li>
               ))}

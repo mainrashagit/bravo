@@ -9,12 +9,19 @@
     background: rgba(0,0,0,0.7)
 
 .cross
-    position: fixed
-    right: 2vw
-    top: 5vh
+    position: absolute
+    // right: 2vw
+    // top: 5vh
+    top: 2em
+    right: 1em
     width: 3em
     height: 3em
     transition: opacity 0.2s
+    cursor: pointer
+
+    @media screen and ( max-width: 768px )
+        width: 2em
+        height: 2em
 
     &:hover
         opacity: 0.4
@@ -43,6 +50,7 @@
     backdrop-filter: blur(15px)
     border-radius: 15px
     cursor: default
+    position: relative
 
     @media screen and ( max-width: 1367px )
         font-size: 0.75rem

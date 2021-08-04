@@ -12,12 +12,19 @@
     @extend %flex-center
 
 .cross
-    position: fixed
-    right: 2vw
-    top: 5vh
+    position: absolute
+    // right: 2vw
+    // top: 5vh
+    top: 2em
+    right: 1em
     width: 3em
     height: 3em
     transition: opacity 0.2s
+    cursor: pointer
+
+    @media screen and ( max-width: 768px )
+        width: 2em
+        height: 2em
 
     &:hover
         opacity: 0.4
@@ -41,6 +48,7 @@
     border-radius: 15px
     background: #2B2E2F
     cursor: initial
+    position: relative
 
     width: min(40em, 90%)
 
