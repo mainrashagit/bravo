@@ -1,10 +1,12 @@
+import { SideNavContent } from "@/lib/api/lang"
 import styles from "./presentation.module.sass"
 
 interface Props {
   setPres: React.Dispatch<React.SetStateAction<boolean>>
+  content?: SideNavContent["presentation"]
 }
 
-const Presentation: React.FC<Props> = ({ setPres }) => {
+const Presentation: React.FC<Props> = ({ setPres, content }) => {
   const close = () => {
     setPres(false)
   }
@@ -15,10 +17,10 @@ const Presentation: React.FC<Props> = ({ setPres }) => {
     <div className={styles.wrapper} onClick={close}>
       <div className={styles.pres} onClick={stopProp}>
         <div className={styles.cross} onClick={close}></div>
-        <div className={styles.pres__title}>presentation in pdf format</div>
-        <div className={styles.pres__desc}>FILE SIZE OVER 100 MB - CONTINUE DOWNLOADING?</div>
+        <div className={styles.pres__title}>{content?.presentationTitle}</div>
+        <div className={styles.pres__desc}>{content?.presentationText}</div>
         <a className={styles.pres__download} onClick={close}>
-          Download
+          {content?.downloadButtonText}
         </a>
       </div>
     </div>

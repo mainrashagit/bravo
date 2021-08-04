@@ -144,7 +144,7 @@ const SideNav: React.FC<Props> = ({ scrollDown }) => {
           </div>
         </div>
       </aside>
-      {pres && <Presentation setPres={setPres} />}
+      {pres && <Presentation setPres={setPres} content={content?.presentation} />}
       {contact && <ContactUs setContact={setContact} content={content?.contactUs} />}
     </>
   )

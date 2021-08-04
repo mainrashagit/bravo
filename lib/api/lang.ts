@@ -280,6 +280,9 @@ interface IIndexPageContent {
       }
       tagline: ILocaleText
     }
+    pageTitle: {
+      pageTitle:ILocaleText
+    }
   }
 }
 
@@ -289,6 +292,7 @@ export type IndexPageContent = {
     sourceUrl: string
   }
   tagline: string
+  title: string
 }
 
 export async function getIndexPageContent(locale: string = defaultLocale): Promise<IndexPageContent> {
@@ -306,11 +310,18 @@ export async function getIndexPageContent(locale: string = defaultLocale): Promi
           ru
         }
       }
+      pageTitle {
+        pageTitle {
+          de
+          en
+          ru
+        }
+      }
     }
   }
   `)) as IIndexPageContent
 
-  const res = { ...data.page.indexPage, tagline: data.page.indexPage.tagline[locale] }
+  const res = { ...data.page.indexPage, tagline: data.page.indexPage.tagline[locale], title: data.page.pageTitle.pageTitle[locale] }
   return res
 }
 

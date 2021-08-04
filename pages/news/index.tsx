@@ -4,12 +4,14 @@ import New from "@modules/new/New"
 import { v4 as uuid } from "uuid"
 import { getNews, News } from "@/lib/api/lang"
 import { GetStaticProps } from "next"
+import { useEffect, useState } from "react"
+import { useRouter } from "next/router"
 
 interface Props {
-  news: News
+  // news: News
 }
 
-const NewsPage: React.FC<Props> = ({ news }) => {
+const NewsPage: React.FC<Props> = ({ /* news */ }) => {
   const newsList = [
     {
       title: "How to build a successful career in consulting?",
@@ -61,7 +63,20 @@ const NewsPage: React.FC<Props> = ({ news }) => {
       views: "1024",
     },
   ]
-  const newEls = news.map(({ title, subsection, text, date, link, image }, i) => (
+  const { locale } = useRouter()
+  const [newsPosts, setNewsPosts] = useState<News>()
+  useEffect(() => {
+    
+    const getNewsPosts = async () => {
+      const items = await getNews(locale)
+      setNewsPosts(items)
+    }
+    getNewsPosts()
+    return () => {
+      
+    }
+  }, [])
+  const newEls = newsPosts?.map(({ title, subsection, text, date, link, image }, i) => (
     <li className={styles.news__new} key={uuid()}>
       <New title={title} subsection={subsection} brief={text} date={date} comments={0} views={0} link={`/news/${link}`} image={image} />
     </li>
@@ -78,11 +93,11 @@ const NewsPage: React.FC<Props> = ({ news }) => {
 
 export default NewsPage
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  const { locale, defaultLocale } = context
-  const loc = locale ?? (defaultLocale as string)
+// export const getStaticProps: GetStaticProps = async (context) => {
+//   const { locale, defaultLocale } = context
+//   const loc = locale ?? (defaultLocale as string)
 
-  const news = await getNews(loc)
+//   const news = await getNews(loc)
 
-  return { props: { news } }
-}
+//   return { props: { news } }
+// }
