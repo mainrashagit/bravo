@@ -1,6 +1,4 @@
 import styles from "./new.module.sass"
-import Image from "next/image"
-import Img from "@img/new1.png"
 import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 
@@ -42,7 +40,7 @@ const New: React.FC<Props> = ({ title, subsection, brief, date, comments, views,
             </div>
             <div className={styles.new__foot}>
               <div className={styles.new__date}>{date}</div>
-              <div className={styles.new__stats}>
+              {/* <div className={styles.new__stats}>
                 <div className={styles.new__comments}>
                   <img src={"/comment.svg"} className={styles.new__comment} />
                   {comments}
@@ -51,7 +49,7 @@ const New: React.FC<Props> = ({ title, subsection, brief, date, comments, views,
                   <img src={"/eye.svg"} className={styles.new__view} />
                   {views}
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

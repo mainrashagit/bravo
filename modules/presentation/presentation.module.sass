@@ -10,8 +10,6 @@
 
 .cross
     position: absolute
-    // right: 2vw
-    // top: 5vh
     top: 2em
     right: 1em
     width: 3em
@@ -22,9 +20,6 @@
     @media screen and ( max-width: 768px )
         width: 2em
         height: 2em
-
-    &:hover
-        opacity: 0.4
 
     &::before,
     &::after
@@ -43,7 +38,6 @@
 .pres
     @extend %flex-center
     flex-direction: column
-    gap: 2.5em
     padding: 4.375em 5.625em
     background: rgba(43, 46, 48, 0.85)
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25)
@@ -51,6 +45,9 @@
     border-radius: 15px
     cursor: default
     position: relative
+
+    & > * + *:not(:nth-child(2))
+        margin-top: 2.5em
 
     @media screen and ( max-width: 1367px )
         font-size: 0.75rem

@@ -106,6 +106,16 @@
     background: $black
     min-height: 100vh
     padding: 35px
+    position: relative
+
+    &::before
+        content: ""
+        position: absolute
+        bottom: 99%
+        left: 0
+        width: 100%
+        background: $black
+        height: 10px
 
     &__title
         padding-top: 3.125em

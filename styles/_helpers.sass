@@ -2,6 +2,7 @@ $yellow: #E8D782
 $dark: #212324
 $black: #101213
 $gray: #404043
+$darkgray: #2B2E2F
 $lightgray: #C1C1C1
 
 %flex-center
@@ -20,3 +21,9 @@ $lightgray: #C1C1C1
     scrollbar-width: none
     &::-webkit-scrollbar
         display: none
+
+%hocus
+    transition: opacity 0.2s
+    &:hover,
+    &:focus
+        opacity: 0.4

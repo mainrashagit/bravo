@@ -14,49 +14,6 @@ interface Props {
 }
 
 const AboutUs: React.FC<Props> = ({ content: { text, team, title, logo } }) => {
-  const teamList = [
-    {
-      name: "Darlene Robertson",
-      post: "Business process analyst",
-      img: "member1.png",
-    },
-    {
-      name: "Gloria Moore",
-      post: "Business process analyst",
-      img: "member2.png",
-    },
-    {
-      name: "Robert Fox",
-      post: "Business process analyst",
-      img: "member1.png",
-    },
-    {
-      name: "Sara Adams",
-      post: "Business process analyst",
-      img: "member2.png",
-    },
-    {
-      name: "zlata orlova",
-      post: "Business process analyst",
-      img: "member2.png",
-    },
-    {
-      name: "Darlene Robertson",
-      post: "Business process analyst",
-      img: "member1.png",
-    },
-    {
-      name: "Gloria Moore",
-      post: "Business process analyst",
-      img: "member2.png",
-    },
-    {
-      name: "Robert Fox",
-      post: "Business process analyst",
-      img: "member1.png",
-    },
-  ]
-
   const teamItems = team.map(({ name, image, position }, i) => (
     <li className={styles.team__member} key={uuid()}>
       <Member name={name} post={position} img={image} />

@@ -2,10 +2,10 @@ import Nav from "@modules/nav/Nav"
 import Head from "next/head"
 import styles from "./index.module.sass"
 import SquareCat from "@modules/squareCat/SquareCat"
-import Image from "next/image"
 import { v4 as uuid } from "uuid"
 import { GetStaticProps } from "next"
-import { DocPageLinks, getDocPageLinks, getIndexPageContent, getNews, IndexPageContent, News } from "@/lib/api/lang"
+import { getIndexPageContent, IndexPageContent } from "@/lib/api/lang"
+import { DocPageLinks } from "@/pages/api/docPageLinks"
 import { useRouter } from "next/router"
 import { useState, useEffect } from "react"
 
@@ -14,21 +14,21 @@ interface Props {
   content: IndexPageContent
 }
 
-export default function Home({ /* docPages, */ content }: Props) {
-  
+export default function Home({ content }: Props) {
   const { locale } = useRouter()
   const [docPages, setDocPages] = useState<DocPageLinks>()
   useEffect(() => {
-    
     const getNewsPosts = async () => {
-      const items = await getDocPageLinks(locale)
+      const res = await fetch("/api/docPageLinks", {
+        method: "POST",
+        body: locale,
+      })
+      const items = await res.json()
       setDocPages(items)
     }
     getNewsPosts()
-    return () => {
-      
-    }
-  }, [])
+    return () => {}
+  }, [locale])
   return (
     <>
       <Head>
@@ -54,8 +54,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const { locale, defaultLocale } = context
   const loc = locale ?? (defaultLocale as string)
 
-  const docPages = await getDocPageLinks(loc)
   const content = await getIndexPageContent(loc)
 
-  return { props: { docPages, content } }
+  return { props: { content } }
 }

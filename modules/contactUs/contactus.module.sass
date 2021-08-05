@@ -13,8 +13,6 @@
 
 .cross
     position: absolute
-    // right: 2vw
-    // top: 5vh
     top: 2em
     right: 1em
     width: 3em
@@ -25,9 +23,6 @@
     @media screen and ( max-width: 768px )
         width: 2em
         height: 2em
-
-    &:hover
-        opacity: 0.4
 
     &::before,
     &::after
@@ -59,11 +54,13 @@
         justify-content: center
         align-items: center
         padding: 3em 5em
-        gap: 3.125em
         height: 100%
+        & > * + *
+            margin-top: 3.125em
         @media screen and ( max-width: 550px )
             padding: 1em
-            gap: 1em
+            & > * + *
+                margin-top: 1em
 
     &__title
         text-align: center
@@ -73,9 +70,10 @@
     &__inputs
         display: flex
         flex-direction: column
-        gap: 1.25em
         width: min(100%, 25em)
         font-size: 1rem
+        & > * + *
+            margin-top: 1.25em
 
     &__input
         border-radius: 6px
@@ -97,6 +95,11 @@
         padding: 0.7813em 0
         cursor: pointer
         box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5)
+        background: #fff
+
+        &:disabled
+            background: #b1b1b1
+            color: #4d4d4d
 
     &__media
         display: flex
@@ -105,3 +108,12 @@
 
     &__link
         width: 1.5625em
+
+        & a
+            display: block
+
+    &__error
+        margin: 0
+        color: #1d7e25
+        &[data-status="error"]
+            color: #a5301c

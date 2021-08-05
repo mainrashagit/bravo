@@ -4,6 +4,7 @@ import { ParsedUrlQuery } from "querystring"
 import { GetStaticPaths, GetStaticProps } from "next"
 import { v4 as uuid } from "uuid"
 import { getNewsPaths, getNewsPostBySlug, NewsPost } from "@/lib/api/lang"
+import Doc from "@modules/doc"
 
 interface Props {
   content: NewsPost
@@ -13,14 +14,8 @@ const NewPage: React.FC<Props> = ({ content: { title, subsection, text, date } }
   return (
     <>
       <Nav />
-      <div className={styles.new}>
-        <div className={styles.new__wrapper}>
-          <div className={styles.new__title}>{title}</div>
-          <hr />
-          <div className={styles.new__date}>{date}</div>
-          <div className={styles.new__text} dangerouslySetInnerHTML={{__html: text}}>
-          </div>
-          <div className={styles.new__stats}>
+      <Doc title={title} text={text} date={date} />
+          {/* <div className={styles.new__stats}>
             <div className={styles.new__com}>
               <img src={"/comment.svg"} className={styles.new__comImg} />
               <span className={styles.new__comNum}>1024</span>
@@ -55,9 +50,7 @@ const NewPage: React.FC<Props> = ({ content: { title, subsection, text, date } }
               </div>
               <div className={styles.comment__body}>{`Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab reprehenderit, sint praesentium laborum modi quia amet debitis placeat doloremque tenetur. Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat possimus veritatis quia a tenetur quas, obcaecati quaerat nam eos aliquam? Consequatur saepe illum quas, praesentium deleniti harum tempora soluta nulla.`}</div>
             </div>
-          </div>
-        </div>
-      </div>
+          </div> */}
     </>
   )
 }

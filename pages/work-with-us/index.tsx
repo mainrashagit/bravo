@@ -4,13 +4,18 @@ import Nav from "@modules/nav/Nav"
 import { v4 as uuid } from "uuid"
 import { getPositions, Positions } from "@/lib/api/lang"
 import { GetStaticProps } from "next"
-
+import { useEffect, useState } from "react"
+import { useRouter } from "next/router"
 
 interface Props {
   positions: Positions
 }
 
-const WorkWithUs: React.FC<Props> = ({positions}) => {
+const WorkWithUs: React.FC<Props> = (
+  {
+    /* positions */
+  }
+) => {
   const posts = [
     {
       location: "Moscow",
@@ -113,27 +118,34 @@ const WorkWithUs: React.FC<Props> = ({positions}) => {
       title: "Audit Manager/Assistant Manager",
     },
   ]
-  const posElements = positions?.map(({ title, loc, resBtn }, i) => (
-    <li className={styles.posts__post} key={uuid()}>
-      <Post title={title} location={loc} resBtn={resBtn} />
-    </li>
-  ))
+  const { locale } = useRouter()
+  const [posElements, setPosElements] = useState<Positions>()
+  useEffect(() => {
+    getPositions(locale).then((res) => setPosElements(res))
+
+    return () => {}
+  }, [])
   return (
     <>
       <Nav />
-      <ul className={styles.posts}>{posElements}</ul>
+      <ul className={styles.posts}>
+        {posElements?.map(({ title, loc, resBtn }, i) => (
+          <li className={styles.posts__post} key={uuid()}>
+            <Post title={title} location={loc} resBtn={resBtn} />
+          </li>
+        ))}
+      </ul>
     </>
   )
 }
 
 export default WorkWithUs
 
+// export const getStaticProps: GetStaticProps = async (context) => {
+//   const { locale, defaultLocale } = context
+//   const loc = locale ?? (defaultLocale as string)
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  const { locale, defaultLocale } = context
-  const loc = locale ?? (defaultLocale as string)
+//   const positions = await getPositions(loc)
 
-  const positions = await getPositions(loc)
-
-  return { props: { positions } }
-}
+//   return { props: { positions } }
+// }

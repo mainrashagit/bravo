@@ -1,3 +1,5 @@
+@use "@styles/helpers" as *
+
 *
     margin: 0
     padding: 0
@@ -19,20 +21,30 @@ ul
 a
     text-decoration: none
     color: inherit
-    transition: opacity 0.2s
-    &:hover
-        opacity: 0.4
-
+    outline: none
+    @extend %hocus
 img
     object-fit: cover
     display: block
 
 button
     border: none
-        
+    background: none
+    color: inherit
+    font: inherit
+    appearance: none
+    text-transform: inherit
+    outline: none
+    @extend %hocus
+
 button, a
     cursor: pointer
 
 svg
     width: auto
     height: auto
+
+input
+    outline: none
+    &[type="submit"]
+        @extend %hocus

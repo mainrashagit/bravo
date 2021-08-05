@@ -25,9 +25,10 @@
         display: flex
         flex-direction: column
         padding: 3em 1.8em
-        gap: 0.625rem
         font-size: 0.625rem
         font-weight: 700
+        & > * + * 
+            margin-top: 0.625rem
 
     &__brief
         height: 100%
@@ -47,6 +48,10 @@
         font-size: 8px
         width: fit-content
 
+        &:empty
+            padding: 0
+            margin-bottom: 1.21rem
+
     &__title
         font-size: 15px
         font-weight: 900
@@ -59,12 +64,14 @@
     &__stats
         display: flex
         align-items: center
-        gap: 10px
+        & > * + *
+            margin-left: 10px
 
     &__comments,
     &__views
         display: flex
-        gap: 5px
+        & > * + *
+            margin-left: 5px
 
     &__comment
         width: 16px

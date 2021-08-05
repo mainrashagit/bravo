@@ -22,8 +22,14 @@
         width: 100%
         display: flex
         justify-content: center
-        gap: 2.1875em
+        --mgn: 2.1875em
+        --nmgn: -2.1875em
+        margin-left: var(--nmgn)
+        margin-top: var(--nmgn)
         flex-wrap: wrap
+        & > *
+            margin-left: var(--mgn)
+            margin-top: var(--mgn)
 
     &__link
         @extend %flex-center

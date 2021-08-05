@@ -8,21 +8,16 @@
     flex-direction: column
     justify-content: center
     align-items: center
-    gap: 1.75em
     text-align: center
     background: rgba(28, 28, 28, 0.8)
     border: 1px solid #1c1c1c
+    & > * + *:not(:nth-child(2))
+        margin-top: 1.75em
 
     &__heading,
     &__subheading,
     &__doc
         transition: opacity 0.2s
-
-    &:hover
-        .square__heading,
-        .square__subheading,
-        .square__doc
-            opacity: 0.4
 
     @media screen and ( max-width: 769px )
         height: 30em
@@ -61,5 +56,10 @@
             width: 2.1875em
 
 .link
-    &:hover
+    &:hover,
+    &:focus
         opacity: 1
+        .square__heading,
+        .square__subheading,
+        .square__doc
+            opacity: 0.4

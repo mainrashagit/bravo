@@ -2,7 +2,6 @@ import styles from "./sidenav.module.sass"
 import { useState, MouseEvent, useEffect } from "react"
 import Link from "next/link"
 import Presentation from "@modules/presentation/Presentation"
-import Image from "next/image"
 import { useRouter } from "next/router"
 import { getSideNavContent, SideNavContent } from "@/lib/api/lang"
 import ContactUs from "@modules/contactUs"
@@ -56,11 +55,11 @@ const SideNav: React.FC<Props> = ({ scrollDown }) => {
             </a>
           </Link>
           <div className={styles.nav__right}>
-            <div className={styles.nav__heart}>
+            {/* <div className={styles.nav__heart}>
               <div className={styles.nav__heartImg}>
                 <img src={"/heart.svg"} alt="favorite" />
               </div>
-            </div>
+            </div> */}
             <div className={styles.nav__burger} onClick={toggleBurger}>
               <div className={styles.nav__burgerImg}>
                 <div className={styles.nav__burgerImgLine} data-active={burger}></div>
@@ -73,18 +72,18 @@ const SideNav: React.FC<Props> = ({ scrollDown }) => {
         <div className={styles.nav__main} data-active={burger} onClick={offBurger}>
           <ul className={styles.nav__links}>
             <li className={styles.nav__link}>
-              <Link href="/about_us">
+              <Link href="/about">
                 <a onClick={offBurger}>{content?.aboutUs}</a>
               </Link>
             </li>
             <li className={styles.nav__link}>
-              <a onClick={onPresentationClick}>{content?.presentation.title}</a>
+              <button onClick={onPresentationClick} tabIndex={0}>{content?.presentation.title}</button>
             </li>
             <li className={styles.nav__link}>
-              <a onClick={onContactClick}>{content?.contactUs.title}</a>
+              <button onClick={onContactClick} tabIndex={0}>{content?.contactUs.title}</button>
             </li>
             <li className={styles.nav__link}>
-              <Link href="/work_with_us">
+              <Link href="/work-with-us">
                 <a onClick={offBurger}>{content?.workWithUs}</a>
               </Link>
             </li>
@@ -95,7 +94,7 @@ const SideNav: React.FC<Props> = ({ scrollDown }) => {
             </li>
           </ul>
           <div className={styles.nav__bottom}>
-            <ul className={styles.nav__misc}>
+            {/* <ul className={styles.nav__misc}>
               <li className={styles.nav__fav}>{content?.favoriteimportant}</li>
               <li className={styles.nav__search}>
                 <label className={styles.nav__searchInputLabel}>
@@ -108,7 +107,7 @@ const SideNav: React.FC<Props> = ({ scrollDown }) => {
                   <input className={styles.nav__searchInput} type="text" placeholder={`${content?.search}...`} />
                 </label>
               </li>
-            </ul>
+            </ul> */}
             <ul className={styles.nav__media}>
               {content?.media?.map(({link, image}) => (
                 <li className={styles.nav__mediaItem} key={uuid()}>

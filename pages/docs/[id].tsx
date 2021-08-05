@@ -3,37 +3,30 @@ import Nav from "@modules/nav/Nav"
 import { ParsedUrlQuery } from "querystring"
 import { GetStaticPaths, GetStaticProps } from "next"
 import { DocPage, getDocPageBySlug, getDocPagePaths } from "@/lib/api/lang"
+import Doc from "@modules/doc"
 
 interface Props {
   id: string
   content: DocPage
 }
 
-const Doc: React.FC<Props> = ({ id, content: { date, text, title } }) => {
+const Document: React.FC<Props> = ({ id, content: { date, text, title } }) => {
   return (
     <>
       <Nav />
-      <div className={styles.new}>
-        <div className={styles.new__wrapper}>
-          <div className={styles.new__title}>{title}</div>
-          <hr />
-          <div className={styles.new__date}>{date}</div>
-          <div className={styles.new__text} dangerouslySetInnerHTML={{ __html: text }}></div>
-          <hr />
-        </div>
-      </div>
+      <Doc title={title} text={text} date={date} />
     </>
   )
 }
 
-export default Doc
+export default Document
 
 interface IParams extends ParsedUrlQuery {
   id: string
 }
 
 export const getStaticPaths: GetStaticPaths = async ({ locales, defaultLocale }) => {
-  const loc = locales ?? [defaultLocale] as string[]
+  const loc = locales ?? ([defaultLocale] as string[])
   const paths = await getDocPagePaths(loc)
   return { paths, fallback: "blocking" }
 }
@@ -41,7 +34,7 @@ export const getStaticPaths: GetStaticPaths = async ({ locales, defaultLocale })
 export const getStaticProps: GetStaticProps = async (context) => {
   const { id } = context.params as IParams
   const { locale, defaultLocale } = context
-  const loc = locale ?? defaultLocale as string
+  const loc = locale ?? (defaultLocale as string)
 
   const content = await getDocPageBySlug(id, loc)
 

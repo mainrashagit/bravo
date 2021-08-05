@@ -1,7 +1,7 @@
 const API_URL = "https://bravo.mainrasha.com/graphql"
 const defaultLocale = "en"
 
-async function fetchAPI(query: string, { variables }: any = {}) {
+export async function fetchAPI(query: string, { variables }: any = {}) {
   const headers: { [header: string]: string } = { "Content-Type": "application/json" }
 
   if (process.env.WORDPRESS_AUTH_REFRESH_TOKEN) {
@@ -54,6 +54,8 @@ interface ISideNavContent {
             }
           }[]
           submitButton: ILocaleText
+          submitSuccessMessage: ILocaleText
+          submitErrorMessage: ILocaleText
         }
       }
       favoriteimportant: ILocaleText
@@ -74,7 +76,9 @@ interface ISideNavContent {
         ru: string
         de: string
         downloadButtonText: ILocaleText
-        presentationFile: string
+        presentationFile: {
+          sourceUrl: string
+        }
         presentationText: ILocaleText
         presentationTitle: ILocaleText
       }
@@ -107,6 +111,8 @@ export type SideNavContent = {
         }
       }[]
       submitButton: string
+      success: string
+      error: string
     }
   }
   favoriteimportant: string
@@ -168,6 +174,16 @@ export async function getSideNavContent(locale: string = defaultLocale): Promise
               }
             }
             submitButton {
+              de
+              en
+              ru
+            }
+            submitSuccessMessage {
+              de
+              en
+              ru
+            }
+            submitErrorMessage {
               de
               en
               ru
@@ -258,16 +274,18 @@ export async function getSideNavContent(locale: string = defaultLocale): Promise
         media: res.contactUs.contactForm.media,
         formFields: res.contactUs.contactForm.formFields.map((field) => field.formField[loc]),
         submitButton: res.contactUs.contactForm.submitButton[loc],
+        success: res.contactUs.contactForm.submitSuccessMessage[loc],
+        error: res.contactUs.contactForm.submitErrorMessage[loc],
       },
     },
     presentation: {
       title: res.presentation[loc],
       downloadButtonText: res.presentation.downloadButtonText[loc],
-      presentationFile: res.presentation.presentationFile,
+      presentationFile: res.presentation.presentationFile.sourceUrl,
       presentationText: res.presentation.presentationText[loc],
       presentationTitle: res.presentation.presentationTitle[loc],
     },
-    searchIcon: res.search.searchIcon
+    searchIcon: res.search.searchIcon,
   }
 }
 
@@ -279,9 +297,13 @@ interface IIndexPageContent {
         sourceUrl: string
       }
       tagline: ILocaleText
+      backgroundImage: {
+        sourceUrl: string
+        srcSet: string
+      }
     }
     pageTitle: {
-      pageTitle:ILocaleText
+      pageTitle: ILocaleText
     }
   }
 }
@@ -289,6 +311,10 @@ interface IIndexPageContent {
 export type IndexPageContent = {
   logo: {
     altText: string
+    sourceUrl: string
+  }
+  bg: {
+    srcSet: string
     sourceUrl: string
   }
   tagline: string
@@ -309,6 +335,10 @@ export async function getIndexPageContent(locale: string = defaultLocale): Promi
           en
           ru
         }
+        backgroundImage {
+          sourceUrl
+          srcSet
+        }
       }
       pageTitle {
         pageTitle {
@@ -321,7 +351,7 @@ export async function getIndexPageContent(locale: string = defaultLocale): Promi
   }
   `)) as IIndexPageContent
 
-  const res = { ...data.page.indexPage, tagline: data.page.indexPage.tagline[locale], title: data.page.pageTitle.pageTitle[locale] }
+  const res = { ...data.page.indexPage, tagline: data.page.indexPage.tagline[locale], title: data.page.pageTitle.pageTitle[locale], bg: data.page.indexPage.backgroundImage }
   return res
 }
 
@@ -677,7 +707,7 @@ export async function getNewsPostBySlug(id: string, locale: string = defaultLoca
 }
 
 interface IAboutPage {
-  post: {
+  page: {
     about: {
       title: ILocaleText
       text: ILocaleText
@@ -719,7 +749,7 @@ export type AboutPage = {
 export async function getAboutPage(locale: string = defaultLocale): Promise<AboutPage> {
   const data = (await fetchAPI(`
   query AboutPage {
-    post(id: "241", idType: DATABASE_ID) {
+    page(id: "372", idType: DATABASE_ID) {
       about {
         team {
           name {
@@ -758,14 +788,14 @@ export async function getAboutPage(locale: string = defaultLocale): Promise<Abou
   
   `)) as IAboutPage
   const res = {
-    title: data.post.about.title[locale],
-    text: data.post.about.text[locale],
-    team: data.post.about.team.map(({ name, position, image }) => ({
+    title: data.page.about.title[locale],
+    text: data.page.about.text[locale],
+    team: data.page.about.team.map(({ name, position, image }) => ({
       name: name[locale],
       position: position[locale],
       image,
     })),
-    logo: data.post.about.logo
+    logo: data.page.about.logo,
   } as AboutPage
   return res
 }
@@ -874,75 +904,15 @@ export async function getNavContentBySlug(id: string, locale: string = defaultLo
   return res
 }
 
-export async function getNavItemContent(item: string, locale: string) {
-  item = item.replace(/_/g, " ")
-  const allNavContent: {
-    [item: string]: ILocaleText
-  } = {
-    consulting: {
-      en: "Financial, legal, tax, accounting ... consulting will help your company easily choose the optimal work direction; calculate the market risks; and find new growth and development opportunities.",
-      ru: "Консультации в области финансов, юриспруденции, налогов, бухгалтерии (перечень сфер) помогут вашей компании легко выбрать оптимальный вектор работы, просчитать риски связанные с изменениями рынка, найти новые возможности роста и развития.",
-      de: "Die Finanz-, Rechts-, Steuer-, Buchhaltungs- (перечень сфер) beratung wird Ihrem Unternehmen helfen, die optimale Arbeitsrichtung zu wählen, die Marktrisiken zu berechnen und neue Wachstums- und Entwicklungsmöglichkeiten zu finden.",
-    },
-    funding: {
-      en: "We are well-versed in government co-financing programs, grants, and other ways to raise additional budget to the business. With BRAVO CONSULTING you will learn how to deploy the financial flow towards your company.",
-      ru: "Мы хорошо ориентируемся в государственных программах софинансирования, грантах и других способах привлечения дополнительного бюджета в бизнес. С помощью «БРАВО КОНСАЛТИНГ» вы узнаете как развернуть финансовый поток в сторону своей компании.",
-      de: "Wir kennen uns mit staatlichen Kofinanzierungsprogrammen, Zuschüssen und anderen Möglichkeiten zur Beschaffung zusätzlicher Mittel für das Unternehmen bestens aus. Mit BRAVO CONSULTING lernen Sie, wie Sie den Finanzstrom für Ihr Unternehmen einsetzen können.",
-    },
-    "company service": {
-      en: "This page contains the full list of services provided by BRAVO CONSULTING: Business and management consulting Tax consulting Legal services Effective management issues Company registration and liquidation Financial statements Accounting outsourcing Working with bank and accounts Audit ",
-      ru: "На этой странице полный перечень услуг «БРАВО КОНСАЛТИНГ»: Консультации по вопросам коммерческой деятельности и управлению Налоговый консалтинг Юридические услуги Вопросы эффективного менеджмента Регистрация и ликвидация компании Финансовая отчетность Бухгалтерский аутсорсинг Работа с банком и счетами Аудит ",
-      de: "Diese Seite enthält die vollständige Liste der von BRAVO CONSULTING angebotenen Dienstleistungen: Unternehmens- und Managementberatung Steuerberatung Juristische Dienstleistungen Fragen der effizienten Verwaltung Registrierung und Liquidation von Unternehmen Jahresabschlüsse Outsourcing der Buchhaltung Arbeit mit Banken und Konten Rechnungsprüfung ",
-    },
-    "tax advice": {
-      en: "Tax law may seem complicated and bureaucratic, but that shouldn't stop your business from succeeding. Choosing BRAVO CONSULTING, you get a reliable partner, who will develop a suitable strategy, taking into account all the advantages hidden in the tax code. With our help you will learn the taxation features that help to conduct business 100% transparently.",
-      ru: "Налоговое законодательство может показаться сложным и бюрократическим, но это не должно мешать вам добиться успеха. Выбирая «БРАВО КОНСАЛТИНГ» вы получаете надежного партнера, который разработает подходящую стратегию с учетом всех преимуществ скрытых в налоговом кодексе. Благодаря нам вы узнаете особенности налогообложения, помогающие вести бизнес 100% прозрачно.",
-      de: "Das Steuerrecht mag kompliziert und bürokratisch erscheinen, aber das sollte Ihr Unternehmen nicht davon abhalten, erfolgreich zu sein. Mit BRAVO CONSULTING haben Sie einen zuverlässigen Partner, der für Sie eine geeignete Strategie entwickelt, die alle im Steuerrecht versteckten Vorteile berücksichtigt. Mit unserer Hilfe lernen Sie die steuerlichen Merkmale kennen, die Ihnen helfen, Ihre Geschäfte zu 100% transparent zu führen.",
-    },
-  }
 
-  return allNavContent[item][locale]
-}
+// interface ITitle {
 
-interface IBg {
-  posts: {
-    nodes: {
-      backgroundImage: {
-        image: { srcSet: string; sourceUrl: string; altText: string }
-        linkedPageTitle: string | null
-      }
-    }[]
-  }
-}
+// }
 
-export type Bg = {
-  srcSet: string
-  sourceUrl: string
-  altText: string
-}
+// type Title = string
 
-export async function getBgByPageSlug(id: string): Promise<Bg> {
-  const data = (await fetchAPI(`
-  query BackgroundImages {
-    posts(where: {categoryName: "background-images"}) {
-      nodes {
-        backgroundImage {
-          image {
-            srcSet
-            sourceUrl
-            altText
-          }
-          linkedPageTitle
-        }
-      }
-    }
-  }
-  `)) as IBg
-  const main = data.posts.nodes.find((node) => node.backgroundImage.linkedPageTitle === null)?.backgroundImage.image ?? {
-    srcSet: "",
-    sourceUrl: "",
-    altText: ""
-  }
-
-  return main
-}
+// export async function getTitle(id: string): Promise<Title> {
+//   const data = fetchAPI(`
+  
+//   `)
+// }

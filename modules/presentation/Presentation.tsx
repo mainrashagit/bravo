@@ -16,10 +16,10 @@ const Presentation: React.FC<Props> = ({ setPres, content }) => {
   return (
     <div className={styles.wrapper} onClick={close}>
       <div className={styles.pres} onClick={stopProp}>
-        <div className={styles.cross} onClick={close}></div>
+        <button className={styles.cross} onClick={close}></button>
         <div className={styles.pres__title}>{content?.presentationTitle}</div>
         <div className={styles.pres__desc}>{content?.presentationText}</div>
-        <a className={styles.pres__download} onClick={close}>
+        <a className={styles.pres__download} onClick={close} href={content?.presentationFile}>
           {content?.downloadButtonText}
         </a>
       </div>
