@@ -1,4 +1,4 @@
-import { SideNavContent } from "@/lib/api/lang"
+import { SideNavContent } from "@/pages/api/getSideNavContent"
 import styles from "./presentation.module.sass"
 
 interface Props {

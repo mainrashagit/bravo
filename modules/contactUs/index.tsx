@@ -1,7 +1,7 @@
 import styles from "./contactus.module.sass"
 import { v4 as uuid } from "uuid"
 import { Field, Form, Formik } from "formik"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { SideNavContent } from "@/pages/api/getSideNavContent"
 
 interface Props {

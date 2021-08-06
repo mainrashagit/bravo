@@ -1,6 +1,4 @@
-import Image from "next/image"
 import styles from "./member.module.sass"
-// import Member1 from "@img/member1.png"
 
 interface Props {
   name: string
