@@ -53,7 +53,7 @@ interface IParams extends ParsedUrlQuery {
 export const getStaticPaths: GetStaticPaths = async ({ locales, defaultLocale }) => {
   const loc = locales ?? ([defaultLocale] as string[])
   const paths = await getNavPaths(loc)
-  return { paths, fallback: "blocking", revalidate: 10 }
+  return { paths, fallback: "blocking" }
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
@@ -61,5 +61,5 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const { locale } = context
   const loc = typeof locale === "string" ? locale : "en"
   const content = await getNavContentBySlug(sub, loc)
-  return { props: { content, sub } }
+  return { props: { content, sub }, revalidate: 10 }
 }

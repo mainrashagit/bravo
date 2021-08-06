@@ -28,7 +28,7 @@ interface IParams extends ParsedUrlQuery {
 export const getStaticPaths: GetStaticPaths = async ({ locales, defaultLocale }) => {
   const loc = locales ?? ([defaultLocale] as string[])
   const paths = await getDocPagePaths(loc)
-  return { paths, fallback: "blocking", revalidate: 10}
+  return { paths, fallback: "blocking" }
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
@@ -38,5 +38,5 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   const content = await getDocPageBySlug(id, loc)
 
-  return { props: { id, content } }
+  return { props: { id, content }, revalidate: 10 }
 }

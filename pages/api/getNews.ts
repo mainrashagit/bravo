@@ -84,7 +84,6 @@ export async function getNews(locale: string = defaultLocale): Promise<News> {
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
   const { locale } = JSON.parse(req.body)
-  console.log(locale)
   const content = await getNews(locale)
   res.send(content)
 }
