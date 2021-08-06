@@ -15,7 +15,7 @@ const SubNav: React.FC<Props> = ({ content, sub }) => {
     <>
       <Nav selectedItem={sub} />
       <div className={styles.subnav}>
-        <div className={styles.subnav__itemMain}>{content[0]}</div>
+        <div className={styles.subnav__itemMain}dangerouslySetInnerHTML={{__html: content[0]}}></div>
         <ul className={styles.subnav__items}>
           {content.map((item, i) => {
             if (i === 0) return
