@@ -25,19 +25,6 @@ const SubNav: React.FC<Props> = ({ content, sub }) => {
               </li>
             )
           })}
-
-          <li className={styles.subnav__item} key={uuid()}>
-            Item1
-          </li>
-          <li className={styles.subnav__item} key={uuid()}>
-            Item2
-          </li>
-          <li className={styles.subnav__item} key={uuid()}>
-            Item3
-          </li>
-          <li className={styles.subnav__item} key={uuid()}>
-            Item4
-          </li>
         </ul>
       </div>
     </>
