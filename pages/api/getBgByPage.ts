@@ -66,7 +66,7 @@ export async function getBgByPage(about: boolean = false): Promise<Bg> {
 }
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
-  console.log(req.body)
-  const content = await getBgByPage()
+  const body = JSON.parse(req.body)
+  const content = await getBgByPage(body.bool)
   res.send(content)
 }

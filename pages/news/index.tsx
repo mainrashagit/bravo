@@ -2,80 +2,27 @@ import styles from "./news.module.sass"
 import Nav from "@modules/nav/Nav"
 import New from "@modules/new/New"
 import { v4 as uuid } from "uuid"
-import { getNews, News } from "@/lib/api/lang"
-import { GetStaticProps } from "next"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
+import { News } from "../api/getNews"
 
-interface Props {
-  // news: News
-}
+interface Props {}
 
-const NewsPage: React.FC<Props> = ({ /* news */ }) => {
-  const newsList = [
-    {
-      title: "How to build a successful career in consulting?",
-      subsection: "Subsection",
-      brief: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur, delectus aut aperiam nam doloremque voluptate pariatur dolores a sequi excepturi asperiores aliquam, ducimus numquam voluptates facilis ea modi tenetur atque facere laboriosam fuga nemo. Aperiam beatae saepe dolor doloremque nihil. Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias perspiciatis tempora natus aliquam distinctio temporibus suscipit ratione adipisci ut eveniet.",
-      date: "06 jun 2021",
-      comments: 36,
-      views: "1024",
-    },
-    {
-      title: "How to build a successful career in consulting?",
-      subsection: "Subsection",
-      brief: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur, delectus aut aperiam nam doloremque voluptate pariatur dolores a sequi excepturi asperiores aliquam, ducimus numquam voluptates facilis ea modi tenetur atque facere laboriosam fuga nemo. Aperiam beatae saepe dolor doloremque nihil.Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias perspiciatis tempora natus aliquam distinctio temporibus suscipit ratione adipisci ut eveniet.Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias perspiciatis tempora natus aliquam distinctio temporibus suscipit ratione adipisci ut eveniet.",
-      date: "06 jun 2021",
-      comments: 36,
-      views: "1024",
-    },
-    {
-      title: "How to build a successful career in consulting?",
-      subsection: "Subsection",
-      brief: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur, delectus aut aperiam nam doloremque voluptate pariatur dolores a sequi excepturi asperiores aliquam, ducimus numquam voluptates facilis ea modi tenetur atque facere laboriosam fuga nemo. Aperiam beatae saepe dolor doloremque nihil.",
-      date: "06 jun 2021",
-      comments: 36,
-      views: "1024",
-    },
-    {
-      title: "How to build a successful career in consulting?",
-      subsection: "Subsection",
-      brief: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      date: "06 jun 2021",
-      comments: 36,
-      views: "1024",
-    },
-    {
-      title: "How to build a successful career in consulting?",
-      subsection: "Subsection",
-      brief: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur, delectus aut aperiam nam doloremque voluptate pariatur dolores a sequi excepturi asperiores aliquam, ducimus numquam voluptates facilis ea modi tenetur atque facere laboriosam fuga nemo. Aperiam beatae saepe dolor doloremque nihil.Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias perspiciatis tempora natus aliquam distinctio temporibus suscipit ratione adipisci ut eveniet.Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias perspiciatis tempora natus aliquam distinctio temporibus suscipit ratione adipisci ut eveniet.Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias perspiciatis tempora natus aliquam distinctio temporibus suscipit ratione adipisci ut eveniet.",
-      date: "06 jun 2021",
-      comments: 36,
-      views: "1024",
-    },
-    {
-      title: "How to build a successful career in consulting?",
-      subsection: "Subsection",
-      brief:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur, delectus aut aperiam nam doloremque voluptate pariatur dolores a sequi excepturi asperiores aliquam, ducimus numquam voluptates facilis ea modi tenetur atque facere laboriosam fuga nemo. Aperiam beatae saepe dolor doloremque nihil.Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias perspiciatis tempora natus aliquam distinctio temporibus suscipit ratione adipisci ut eveniet.Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias perspiciatis tempora natus aliquam distinctio temporibus suscipit ratione adipisci ut eveniet.Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias perspiciatis tempora natus aliquam distinctio temporibus suscipit ratione adipisci ut eveniet.Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias perspiciatis tempora natus aliquam distinctio temporibus suscipit ratione adipisci ut eveniet.Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias perspiciatis tempora natus aliquam distinctio temporibus suscipit ratione adipisci ut eveniet.Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias perspiciatis tempora natus aliquam distinctio temporibus suscipit ratione adipisci ut eveniet.",
-      date: "06 jun 2021",
-      comments: 36,
-      views: "1024",
-    },
-  ]
-  const { locale } = useRouter()
+const NewsPage: React.FC<Props> = ({}) => {
+  const { locale, defaultLocale } = useRouter()
   const [newsPosts, setNewsPosts] = useState<News>()
   useEffect(() => {
-    
     const getNewsPosts = async () => {
-      const items = await getNews(locale)
+      const itemsRes = await fetch("/api/getNews", {
+        method: "POST",
+        body: JSON.stringify({ locale: locale ?? defaultLocale ?? null }),
+      })
+      const items = (await itemsRes.json()) as News
       setNewsPosts(items)
     }
     getNewsPosts()
-    return () => {
-      
-    }
-  }, [])
+    return () => {}
+  }, [locale])
   const newEls = newsPosts?.map(({ title, subsection, text, date, link, image }, i) => (
     <li className={styles.news__new} key={uuid()}>
       <New title={title} subsection={subsection} brief={text} date={date} comments={0} views={0} link={`/news/${link}`} image={image} />
@@ -92,12 +39,3 @@ const NewsPage: React.FC<Props> = ({ /* news */ }) => {
 }
 
 export default NewsPage
-
-// export const getStaticProps: GetStaticProps = async (context) => {
-//   const { locale, defaultLocale } = context
-//   const loc = locale ?? (defaultLocale as string)
-
-//   const news = await getNews(loc)
-
-//   return { props: { news } }
-// }

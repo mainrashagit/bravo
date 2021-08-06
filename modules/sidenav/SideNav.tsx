@@ -3,9 +3,9 @@ import { useState, MouseEvent, useEffect } from "react"
 import Link from "next/link"
 import Presentation from "@modules/presentation/Presentation"
 import { useRouter } from "next/router"
-import { getSideNavContent, SideNavContent } from "@/lib/api/lang"
 import ContactUs from "@modules/contactUs"
 import {v4 as uuid} from "uuid"
+import { SideNavContent } from "@/pages/api/getSideNavContent"
 
 interface Props {
   scrollDown: boolean
@@ -39,7 +39,11 @@ const SideNav: React.FC<Props> = ({ scrollDown }) => {
     document.cookie = `NEXT_LOCALE=${locale};expires=${date.toUTCString()};path=/`
 
     const getContent = async () => {
-      const content = await getSideNavContent(locale)
+      const contentRes = await fetch("/api/getSideNavContent", {
+        method: "POST",
+        body: JSON.stringify({ locale: locale ?? defaultLocale ?? null }),
+      })
+      const content = await contentRes.json() as SideNavContent
       setContent(content)
     }
     getContent()

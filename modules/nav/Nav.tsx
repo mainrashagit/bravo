@@ -3,8 +3,8 @@ import { HTMLProps, useContext, useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import styles from "./nav.module.sass"
 import { v4 as uuid } from "uuid"
-import { getNavLinks, NavLinks } from "../../lib/api/lang"
 import { useRouter } from "next/router"
+import { NavLinks } from "@/pages/api/getNavLinks"
 
 interface Props {
   selectedItem?: string
@@ -19,7 +19,7 @@ const Nav: React.FC<Props & HTMLProps<HTMLElement>> = ({
   const { scrollDown } = ctx!
   const [atTop, setAtTop] = useState(false)
   const [items, setItems] = useState<NavLinks>()
-  const { locale } = useRouter()
+  const { locale, defaultLocale } = useRouter()
   useEffect(() => {
     const adjust = () => {
       if (!navRef.current) return
@@ -34,11 +34,15 @@ const Nav: React.FC<Props & HTMLProps<HTMLElement>> = ({
     }
   }, [])
   useEffect(() => {
-    const getTitles = async () => {
-      const items = await getNavLinks(locale)
-      setItems(items)
+    const getContent = async () => {
+      const linksRes = await fetch("/api/getNavLinks", {
+        method: "POST",
+        body: JSON.stringify({ locale: locale ?? defaultLocale ?? null }),
+      })
+      const links = (await linksRes.json()) as NavLinks
+      setItems(links)
     }
-    getTitles()
+    getContent()
     return () => {
       
     }

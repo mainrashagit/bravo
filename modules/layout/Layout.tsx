@@ -4,10 +4,10 @@ import styles from "./layout.module.sass"
 import { NavContext } from "@/context/NavContext"
 import SimpleBar from "simplebar-react"
 import "simplebar/src/simplebar.css"
-// import { getTitle } from "@/lib/api/lang"
 import { Bg } from "@/pages/api/getBgByPage"
 import { useRouter } from "next/router"
 import Head from "next/head"
+import { Title } from "@/pages/api/getPageTitle"
 
 interface Props {}
 
@@ -51,16 +51,21 @@ const Layout: React.FC<Props> = ({ children }) => {
     window.addEventListener("resize", resizeHeight)
 
     const getBg = async () => {
-      // const resBg = await fetch("/api/getBgByPage", {
-      //   method: "POST",
-      //   body: JSON.stringify({ bool: route.includes("about") }),
-      // })
-      // const bg = await getBgByPage(route.includes("about"))
-      // const asPathNoTrailingSlash = asPath.endsWith("/") ? asPath.substring(0, asPath.length - 1) : asPath
-      // const slug = asPathNoTrailingSlash.substring(asPathNoTrailingSlash.lastIndexOf("/") + 1)
-      // const title = await getTitle(locale, slug, slug.length > 0 && !slug.includes("about") && !slug.includes("work-with-us") && !slug.includes("news"))
-      // setTitle(title)
-      // setBg(bg)
+      const resBg = await fetch("/api/getBgByPage", {
+        method: "POST",
+        body: JSON.stringify({ bool: route.includes("about") }),
+      })
+      const bg = (await resBg.json()) as Bg
+      const asPathNoTrailingSlash = asPath.endsWith("/") ? asPath.substring(0, asPath.length - 1) : asPath
+      const slug = asPathNoTrailingSlash.substring(asPathNoTrailingSlash.lastIndexOf("/") + 1)
+      const isPost = slug.length > 0 && !slug.includes("about") && !slug.includes("work-with-us") && !(slug.includes("news") && slug.length === 4)
+      const resTitle = await fetch("/api/getPageTitle", {
+        method: "POST",
+        body: JSON.stringify({ id: slug, locale, post: isPost }),
+      })
+      const title = await resTitle.text() as Title
+      setTitle(title)
+      setBg(bg)
     }
     getBg()
     return () => {
