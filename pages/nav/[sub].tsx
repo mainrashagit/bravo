@@ -20,8 +20,7 @@ const SubNav: React.FC<Props> = ({ content, sub }) => {
           {content.map((item, i) => {
             if (i === 0) return
             return (
-              <li className={styles.subnav__item} key={uuid()}>
-                {item}
+              <li className={styles.subnav__item} key={uuid()} dangerouslySetInnerHTML={{__html: item}}>
               </li>
             )
           })}
